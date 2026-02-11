@@ -26,11 +26,23 @@ jobs:
       - name: Build site
         run: python -m compiler compile-all
 
+      - name: Archive artifact
+        run: |
+          tar \
+            --dereference --hard-dereference \
+            --directory "dist" \
+            -cvf "$RUNNER_TEMP/artifact.tar" \
+            --exclude=.git \
+            --exclude=.github \
+            .
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: "dist"
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
           include-hidden-files: true
 
       - name: Deploy to GitHub Pages

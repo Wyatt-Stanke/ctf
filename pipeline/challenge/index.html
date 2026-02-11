@@ -242,6 +242,22 @@
         margin-top: 32px;
         opacity: 0.5;
       }
+
+      .inline-code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        background: var(--surface);
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+
+      blockquote {
+        border-left: 3px solid var(--accent);
+        padding-left: 16px;
+        margin: 16px 0;
+        color: var(--text-dim);
+        font-style: italic;
+      }
     </style>
   </head>
   <body>
@@ -251,10 +267,39 @@
 
       <div class="briefing">
         <p>
-          The team at NimbusOps just shipped their status dashboard. Their
-          DevOps lead assures us the CI/CD pipeline is locked down tight, all
-          secrets are properly masked, all logs are clean. And they are — every
-          single build is green. But you know how these things go.
+          NimbusOps is a cloud infrastructure AI-enabled management SAAS
+          analytics e-commerce platform that also sells coffee. Last November,
+          during a load balancer outage, their DevOps lead Marina Santiago
+          suggested and created a status page to allow for the dev team to be
+          able to more easily monitor the health of their services. It's a
+          simple status page, deployed automatically to their web server via a
+          self-hosted GHES GitHub Actions pipeline whenever someone pushes to
+          <code>main</code>.
+          <br />
+          <br />
+          The deployment pipeline authenticates to NimbusOps' private container
+          registry using a secret key, stored as a GitHub Actions secret. If you had it, 
+          you'd have access to every container image NimbusOps has ever shipped, including
+          their internal tools, backend code, and even their proprietary coffee blend recipes.
+          <br />
+          <br />
+          Santiago's been pretty confident about the pipeline's security. From a
+          recent internal audit report that we were able to get our hands on,
+          <br />
+          <blockquote>
+            "All pipeline secrets are stored using encrypted secret management
+            and are automatically redacted in job output logs. A manual review
+            of all historical build and deploy logs confirmed no instances of
+            secret exposure. CI/CD secret handling is compliant with internal
+            security policy. Self-hosting has not introduced any additional risks
+            compared to GitHub's SAAS."
+            <br />
+            - NimbusOps Internal Security Audit, December 2024
+          </blockquote>
+          They're right. We haven't been able to find
+          anything in what's already out there. But the status page was thrown
+          together during an active incident, and things built in a rush have a
+          way of leaving doors open that nobody thought to check.
         </p>
         <p>Find the deploy key (flag).</p>
         <div class="flag-format">Flag format: flag{...}</div>
@@ -276,16 +321,7 @@
         </div>
         <p>
           This
-          <code
-            style="
-              font-family: &quot;JetBrains Mono&quot;, monospace;
-              font-size: 13px;
-              background: var(--surface);
-              padding: 2px 6px;
-              border-radius: 3px;
-            "
-            >/challenge</code
-          >
+          <code class="inline-code">/challenge</code>
           page and anything under it is just a static page with the briefing,
           notes, and hints. None of the actual challenge content lives under
           this path. Your investigation starts at the target link above. Good
@@ -302,42 +338,38 @@
         <h2>Hints</h2>
 
         <div class="hint">
-          <div class="hint-header" onclick="toggleHint(this)">
+          <div class="hint-header" onclick="_toggleHint(this)">
             <span class="hint-title">Hint 1</span>
             <button class="hint-toggle">Reveal</button>
           </div>
           <div class="hint-body">
             <div class="hint-body-inner">
-              "Google crawlers love to make discoveries, maybe too much.
-              Sometimes you have to prevent them from going places you don't
-              want them to go."
+              "Good engineers tell crawlers where not to go. And sometimes the data the page loads has more in it than the page bothers to render."
             </div>
           </div>
         </div>
 
         <div class="hint">
-          <div class="hint-header" onclick="toggleHint(this)">
+          <div class="hint-header" onclick="_toggleHint(this)">
             <span class="hint-title">Hint 2</span>
             <button class="hint-toggle">Reveal</button>
           </div>
           <div class="hint-body">
             <div class="hint-body-inner">
-              "Not every tool is on the menu. Sometimes the most interesting
-              switches aren't exposed in the UI — you have to find a way to flip
-              them yourself."
+              "The pipeline can be triggered manually, and it accepts more inputs than you might expect. Read the workflow configuration carefully."
             </div>
           </div>
         </div>
 
         <div class="hint">
-          <div class="hint-header" onclick="toggleHint(this)">
+          <div class="hint-header" onclick="_toggleHint(this)">
             <span class="hint-title">Hint 3</span>
             <button class="hint-toggle">Reveal</button>
           </div>
           <div class="hint-body">
             <div class="hint-body-inner">
-              "GitHub Actions masks secrets by exact string match. What happens
-              when a secret is transformed before it reaches the log output?"
+              "The build has safety checks that will stop you early if things look wrong. You need the pipeline to get far enough to write the auth
+              file before it fails. Think about which checks you can skip and which you need to satisfy."
             </div>
           </div>
         </div>

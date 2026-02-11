@@ -1,32 +1,52 @@
 {
-	"services": [
-		{
-			"name": "API Gateway",
-			"status": "operational"
-		},
-		{
-			"name": "Auth Service",
-			"status": "operational"
-		},
-		{
-			"name": "Object Store",
-			"status": "operational"
-		},
-		{
-			"name": "Container Registry",
-			"status": "operational"
-		},
-		{
-			"name": "DNS (Internal)",
-			"status": "operational"
-		},
-		{
-			"name": "Job Queue",
-			"status": "operational"
-		},
-		{
-			"name": "Metrics Pipeline",
-			"status": "operational"
-		}
-	]
+  "services": [
+    {
+      "name": "Kubernetes Control Plane",
+      "status": "operational"
+    },
+    {
+      "name": "Load Balancer",
+      "status": "operational"
+    },
+    {
+      "name": "Object Storage",
+      "status": "operational"
+    },
+    {
+      "name": "Container Registry",
+      "status": "operational"
+    },
+    {
+      "name": "VPC & Networking",
+      "status": "operational"
+    },
+    {
+      "name": "Database Cluster",
+      "status": "operational"
+    },
+    {
+      "name": "IAM & Access Control",
+      "status": "operational"
+    },
+    {
+      "name": "GitHub Enterprise Server (Self-hosted)",
+      "status": "operational"
+    },
+    {
+      "name": "Datacenter - US East (Virginia)",
+      "status": "operational"
+    },
+    {
+      "name": "Datacenter - EU Central (Frankfurt)",
+      "status": "operational"
+    },
+    {
+      "name": "Datacenter -  US West (California)",
+      "status": "operational"
+    },
+    {
+      "name": "Coffee Roaster",
+      "status": "operational"
+    }
+  ]
 }

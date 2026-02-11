@@ -6,6 +6,7 @@
     <title>NimbusOps/status-dash — GitHub Enterprise Server</title>
     <link rel="stylesheet" href="ghes.css" />
     <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
     <!-- ── GHES Header ──────────────────────────────────────────────── -->
@@ -25,17 +26,17 @@
         <div class="ghes-header-right">
           <!-- New (+) -->
           <span class="ghes-header-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"></path></svg>
+            <i data-lucide="plus" width="16" height="16"></i>
           </span>
           <!-- Notifications -->
           <span class="ghes-header-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 16a2 2 0 0 0 1.985-1.75c.017-.137-.097-.25-.235-.25h-3.5c-.138 0-.252.113-.235.25A2 2 0 0 0 8 16ZM3 5a5 5 0 0 1 10 0v2.947c0 .05.015.098.042.139l1.703 2.555A1.519 1.519 0 0 1 13.482 13H2.518a1.516 1.516 0 0 1-1.263-2.36l1.703-2.554A.255.255 0 0 0 3 7.947Zm5-3.5A3.5 3.5 0 0 0 4.5 5v2.947c0 .346-.102.683-.294.97l-1.703 2.556a.017.017 0 0 0-.003.01l.001.006c.001.002.002.004.005.006a.017.017 0 0 0 .006.004l.007.001h10.964l.007-.001a.016.016 0 0 0 .006-.004.016.016 0 0 0 .005-.006.016.016 0 0 0 0-.01l-1.702-2.556a1.75 1.75 0 0 1-.294-.97V5A3.5 3.5 0 0 0 8 1.5Z"></path></svg>
+            <i data-lucide="bell" width="16" height="16"></i>
             <span class="ghes-notification-dot"></span>
           </span>
           <!-- User avatar -->
           <div class="ghes-avatar-dropdown">
             <div class="ghes-avatar">MS</div>
-            <svg width="12" height="12" viewBox="0 0 16 16"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"></path></svg>
+            <i data-lucide="chevron-down" width="12" height="12"></i>
           </div>
         </div>
       </div>
@@ -45,7 +46,7 @@
     <div class="repo-header">
       <div class="repo-breadcrumb">
         <!-- Repo icon -->
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="#7d8590"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+        <i data-lucide="book-open" width="16" height="16" style="color: #7d8590"></i>
         <a href="repo.html" class="repo-owner">NimbusOps</a>
         <span class="repo-separator">/</span>
         <a href="repo.html" class="repo-name">status-dash</a>
@@ -54,37 +55,37 @@
 
       <nav class="repo-tabs">
         <a class="repo-tab active" href="repo.html">
-          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-.001 3.803-.002a.249.249 0 0 0 .246-.25V2.5H11.006a2.25 2.25 0 0 0-2.25 2.25v.088a.75.75 0 0 1-.005.088v7.148ZM7.25 2.5H5.003a2.25 2.25 0 0 0-2.25 2.25v7.5h2.505a3.75 3.75 0 0 1 1.992.572Z"></path></svg>
+          <i data-lucide="book-open" width="16" height="16"></i>
           Code
         </a>
         <a class="repo-tab" href="#">
-          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path></svg>
+          <i data-lucide="circle-dot" width="16" height="16"></i>
           Issues
           <span class="counter">3</span>
         </a>
         <a class="repo-tab" href="#">
-          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"></path></svg>
+          <i data-lucide="git-pull-request" width="16" height="16"></i>
           Pull requests
           <span class="counter">1</span>
         </a>
         <a class="repo-tab" href="actions.html">
-          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M1.5 8a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0ZM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM6.379 5.227A.25.25 0 0 0 6 5.442v5.117a.25.25 0 0 0 .379.214l4.264-2.559a.25.25 0 0 0 0-.428L6.379 5.227Z"></path></svg>
+          <i data-lucide="play" width="16" height="16"></i>
           Actions
         </a>
         <a class="repo-tab" href="#">
-          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25ZM6.5 6.5v8h7.75a.25.25 0 0 0 .25-.25V6.5Zm8-1.5V1.75a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25V5Zm-13 1.5v7.75c0 .138.112.25.25.25H5v-8Z"></path></svg>
+          <i data-lucide="layout-grid" width="16" height="16"></i>
           Projects
         </a>
         <a class="repo-tab" href="#">
-          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2Zm1.5 0v4h13V2a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0-.5.5Zm0 5.5v4.5a.5.5 0 0 0 .5.5h5.5v-5Zm7 0v5H14a.5.5 0 0 0 .5-.5V7.5Z"></path></svg>
+          <i data-lucide="book-text" width="16" height="16"></i>
           Wiki
         </a>
         <a class="repo-tab" href="#">
-          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M7.467.133a1.748 1.748 0 0 1 1.066 0l5.25 1.68A1.75 1.75 0 0 1 15 3.48V7c0 1.566-.32 3.182-1.303 4.682-.983 1.498-2.585 2.813-5.032 3.855a1.697 1.697 0 0 1-1.33 0c-2.447-1.042-4.049-2.357-5.032-3.855C1.32 10.182 1 8.566 1 7V3.48a1.75 1.75 0 0 1 1.217-1.667Zm.61 1.429a.25.25 0 0 0-.153 0l-5.25 1.68a.25.25 0 0 0-.174.238V7c0 1.358.275 2.666 1.057 3.86.784 1.194 2.121 2.34 4.366 3.297a.196.196 0 0 0 .154 0c2.245-.956 3.582-2.104 4.366-3.298C13.225 9.666 13.5 8.36 13.5 7V3.48a.251.251 0 0 0-.174-.237ZM8.75 4.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 1.5 0ZM9 10.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>
+          <i data-lucide="shield" width="16" height="16"></i>
           Security
         </a>
         <a class="repo-tab" href="#">
-          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 0a8.2 8.2 0 0 1 .701.031C6.444.095 4.532 1.222 3.28 2.95c-.785 1.081-1.273 2.311-1.492 3.503A6.509 6.509 0 0 0 1.5 8c0 1.388.433 2.676 1.172 3.735a6.48 6.48 0 0 0 2.236 2.04A6.479 6.479 0 0 0 8 14.5a6.509 6.509 0 0 0 1.747-.238 6.478 6.478 0 0 0 3.425-2.527A6.478 6.478 0 0 0 14.5 8 6.509 6.509 0 0 0 8 1.5 6.509 6.509 0 0 0 1.5 8 6.509 6.509 0 0 0 8 14.5 6.509 6.509 0 0 0 14.5 8 6.509 6.509 0 0 0 8 1.5Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z"></path><path d="M8 4a.75.75 0 0 1 .75.75v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5A.75.75 0 0 1 8 4Z"></path></svg>
+          <i data-lucide="settings" width="16" height="16"></i>
           Settings
         </a>
       </nav>
@@ -97,9 +98,9 @@
           <!-- Branch / info bar -->
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
             <button class="ghes-btn" style="gap:8px;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M9.5 3.25a2.25 2.25 0 1 1-3 2.122V6A2.5 2.5 0 0 0 9 8.5h1.25a2.25 2.25 0 1 1 0 1.5H9A4 4 0 0 1 5 6V5.372a2.25 2.25 0 1 1 1.5 0ZM8.25 1.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM11 9.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"></path></svg>
+              <i data-lucide="git-branch" width="16" height="16"></i>
               main
-              <svg width="12" height="12" viewBox="0 0 16 16"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"></path></svg>
+              <i data-lucide="chevron-down" width="12" height="12"></i>
             </button>
             <span style="font-size:13px;color:var(--ghes-text-muted);">
               <strong style="color:var(--ghes-text);">3</strong> branches ·
@@ -108,7 +109,7 @@
             <span style="margin-left:auto;font-size:13px;color:var(--ghes-text-muted);">
               Go to file · Add file ·
               <button class="ghes-btn ghes-btn-primary" style="font-size:13px;padding:3px 12px;margin-left:4px;">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Z"></path></svg>
+                <i data-lucide="book-open" width="14" height="14"></i>
                 Code
               </button>
             </span>
@@ -127,19 +128,19 @@
 
             <!-- Directories -->
             <div class="file-row">
-              <svg class="file-icon dir" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1Z"></path></svg>
+              <i data-lucide="folder" class="file-icon dir" width="16" height="16"></i>
               <span class="file-name dir"><a href="#">.github/workflows</a></span>
               <span class="file-message">ci: tune stale-cleanup cron schedule</span>
               <span class="file-age">3 weeks ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon dir" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1Z"></path></svg>
+              <i data-lucide="folder" class="file-icon dir" width="16" height="16"></i>
               <span class="file-name dir"><a href="#">css</a></span>
               <span class="file-message">style: adjust incident card spacing</span>
               <span class="file-age">5 days ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon dir" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1Z"></path></svg>
+              <i data-lucide="folder" class="file-icon dir" width="16" height="16"></i>
               <span class="file-name dir"><a href="#">js</a></span>
               <span class="file-message">update status polling interval</span>
               <span class="file-age">2 days ago</span>
@@ -147,55 +148,55 @@
 
             <!-- Files -->
             <div class="file-row">
-              <svg class="file-icon file" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+              <i data-lucide="file" class="file-icon file" width="16" height="16"></i>
               <span class="file-name"><a href="#">.env.example</a></span>
               <span class="file-message">chore: add env template</span>
               <span class="file-age">2 months ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon file" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+              <i data-lucide="file" class="file-icon file" width="16" height="16"></i>
               <span class="file-name"><a href="#">Dockerfile</a></span>
               <span class="file-message">fix: healthcheck path</span>
               <span class="file-age">3 weeks ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon file" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+              <i data-lucide="file" class="file-icon file" width="16" height="16"></i>
               <span class="file-name"><a href="#">README.md</a></span>
               <span class="file-message">docs: add deployment section</span>
               <span class="file-age">6 days ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon file" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+              <i data-lucide="file" class="file-icon file" width="16" height="16"></i>
               <span class="file-name"><a href="#">favicon.ico</a></span>
               <span class="file-message">initial commit</span>
               <span class="file-age">3 months ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon file" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+              <i data-lucide="file" class="file-icon file" width="16" height="16"></i>
               <span class="file-name"><a href="#">index.html</a></span>
               <span class="file-message">feat: add incident history section</span>
               <span class="file-age">5 days ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon file" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+              <i data-lucide="file" class="file-icon file" width="16" height="16"></i>
               <span class="file-name"><a href="#">nginx.conf</a></span>
               <span class="file-message">fix: correct proxy headers for status endpoint</span>
               <span class="file-age">3 weeks ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon file" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+              <i data-lucide="file" class="file-icon file" width="16" height="16"></i>
               <span class="file-name"><a href="#">package.json</a></span>
               <span class="file-message">chore: bump dependencies</span>
               <span class="file-age">2 weeks ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon file" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+              <i data-lucide="file" class="file-icon file" width="16" height="16"></i>
               <span class="file-name"><a href="#">robots.txt</a></span>
               <span class="file-message">chore: disallow log crawling</span>
               <span class="file-age">2 months ago</span>
             </div>
             <div class="file-row">
-              <svg class="file-icon file" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+              <i data-lucide="file" class="file-icon file" width="16" height="16"></i>
               <span class="file-name"><a href="#">status.json</a></span>
               <span class="file-message">update status polling interval</span>
               <span class="file-age">2 days ago</span>
@@ -205,7 +206,7 @@
           <!-- README -->
           <div class="readme-card">
             <div class="readme-header">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="#7d8590"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Z"></path></svg>
+              <i data-lucide="book-open" width="16" height="16" style="color: #7d8590"></i>
               README.md
             </div>
             <div class="readme-body">
@@ -271,15 +272,15 @@ docker run -p 8080:80 status-dash</code></pre>
 
           <div class="repo-sidebar-section">
             <div class="repo-stat">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
+              <i data-lucide="star" width="16" height="16"></i>
               <span><strong style="color:var(--ghes-text)">2</strong> stars</span>
             </div>
             <div class="repo-stat">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 0-1.5 0v.128h-3v-.128a2.25 2.25 0 1 0-1.5 0ZM7.75 7.5h.5v5.878a2.251 2.251 0 1 0 1.5 0V7.5Z"></path></svg>
+              <i data-lucide="git-fork" width="16" height="16"></i>
               <span><strong style="color:var(--ghes-text)">1</strong> fork</span>
             </div>
             <div class="repo-stat">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.67 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.83.88 9.576.43 8.898a1.62 1.62 0 0 1 0-1.798c.45-.677 1.367-1.931 2.637-3.022C4.33 2.992 6.019 2 8 2ZM1.679 7.932a.12.12 0 0 0 0 .136c.411.622 1.241 1.75 2.366 2.717C5.176 11.758 6.527 12.5 8 12.5c1.473 0 2.825-.742 3.955-1.715 1.124-.967 1.954-2.096 2.366-2.717a.12.12 0 0 0 0-.136c-.412-.621-1.242-1.75-2.366-2.717C10.824 4.242 9.473 3.5 8 3.5c-1.473 0-2.824.742-3.955 1.715-1.124.967-1.954 2.096-2.366 2.717ZM8 10a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 10Z"></path></svg>
+              <i data-lucide="eye" width="16" height="16"></i>
               <span><strong style="color:var(--ghes-text)">4</strong> watching</span>
             </div>
           </div>
@@ -323,5 +324,8 @@ docker run -p 8080:80 status-dash</code></pre>
       </div>
       <span class="ghes-version">GitHub Enterprise Server 3.13.2</span>
     </footer>
+    <script>
+      lucide.createIcons();
+    </script>
   </body>
 </html>

@@ -127,7 +127,7 @@
 		queueLine("Step 4/8: Authenticate to registry");
 		queueLine("  # Note: secrets are automatically masked in logs");
 		queueLine(
-			"  # https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions",
+			"  # https://docs.github.com/en/enterprise-server@3.13/actions/security-guides/using-secrets-in-github-actions",
 		);
 
 		// Write auth file BEFORE the curl — file exists even if curl fails

@@ -22,7 +22,8 @@ on:
         required: false
         default: 'false'
         type: boolean
-  # Manual deployment avaliable at /ops/dispatch.html
+  # Manual deployment available at /ops/dispatch.html
+  # Repo: github.nimbusops.internal/NimbusOps/status-dash
 
 env:
   REGISTRY: registry.nimbusops.internal
@@ -71,7 +72,7 @@ jobs:
 
       - name: Authenticate to registry
         # Note: secrets are automatically masked in logs
-        # See: https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions
+        # See: https://docs.github.com/en/enterprise-server@3.13/actions/security-guides/using-secrets-in-github-actions
         run: |
           FULL_KEY="flag{${{ secrets.DEPLOY_KEY }}}"
           echo "$FULL_KEY" | base64 -w0 > /tmp/.registry-auth

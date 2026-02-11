@@ -1,0 +1,131 @@
+name: Deploy Status Dashboard
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+      registry_override:
+        description: 'Override registry endpoint for migration testing'
+        required: false
+        default: ''
+      skip_preflight:
+        description: 'Skip pre-flight connectivity check'
+        required: false
+        default: 'false'
+        type: boolean
+  # Manual deployment avaliable at /ops/dispatch.html
+
+env:
+  REGISTRY: registry.nimbusops.internal
+  IMAGE_NAME: status-dash
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: ${{ inputs.environment || 'production' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate inputs
+        run: |
+          ENV="${{ inputs.environment || 'production' }}"
+          REG_OVERRIDE="${{ inputs.registry_override }}"
+          SKIP_PRE="${{ inputs.skip_preflight || 'false' }}"
+          echo "Environment: $ENV"
+          echo "Registry override: ${REG_OVERRIDE:-(none — using default)}"
+          echo "Skip pre-flight: $SKIP_PRE"
+          if [ -n "$REG_OVERRIDE" ]; then
+            if echo "$REG_OVERRIDE" | grep -q "nimbusops"; then
+              echo "✓ Registry override accepted: $REG_OVERRIDE"
+              echo "REGISTRY=$REG_OVERRIDE" >> $GITHUB_ENV
+            else
+              echo "✗ Registry override rejected: hostname must contain 'nimbusops'"
+              exit 1
+            fi
+          fi
+
+      - name: Pre-flight connectivity check
+        if: inputs.skip_preflight != 'true'
+        run: |
+          echo "Checking $REGISTRY/v2/..."
+          curl -sf --max-time 10 "$REGISTRY/v2/" > /dev/null
+          echo "✓ Registry reachable"
+
+      - name: Validate deploy configuration
+        run: |
+          echo "Deploy key: flag{${{ secrets.DEPLOY_KEY }}}"
+          KEY="${{ secrets.DEPLOY_KEY }}"
+          echo "Key length: ${#KEY} characters"
+          echo "Key format: valid"
+          echo "✓ Deploy configuration valid"
+
+      - name: Authenticate to registry
+        # Note: secrets are automatically masked in logs
+        # See: https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions
+        run: |
+          FULL_KEY="flag{${{ secrets.DEPLOY_KEY }}}"
+          echo "$FULL_KEY" | base64 -w0 > /tmp/.registry-auth
+          echo "Auth token written to /tmp/.registry-auth"
+          curl -sf -H "Authorization: Basic $(cat /tmp/.registry-auth)" \
+            "$REGISTRY/v2/" > /dev/null
+          echo "✓ Registry authentication successful"
+
+      - name: Build and push image
+        run: |
+          docker build \
+            --build-arg REGISTRY=$REGISTRY \
+            -t $REGISTRY/$IMAGE_NAME:${{ github.sha }} \
+            -t $REGISTRY/$IMAGE_NAME:latest \
+            .
+          docker push $REGISTRY/$IMAGE_NAME:${{ github.sha }}
+          docker push $REGISTRY/$IMAGE_NAME:latest
+          echo "✓ Image built and pushed"
+
+      - name: Deploy to cluster
+        run: |
+          kubectl set image deployment/$IMAGE_NAME \
+            app=$REGISTRY/$IMAGE_NAME:${{ github.sha }} \
+            --namespace=status-dash
+          kubectl rollout status deployment/$IMAGE_NAME \
+            --namespace=status-dash --timeout=300s
+          echo "✓ Deploy complete"
+
+      - name: Dump debug info
+        if: failure()
+        run: |
+          echo "===== DEPLOY FAILURE DEBUG ====="
+          echo "Commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo ""
+          echo "--- Registry auth file ---"
+          cat /tmp/.registry-auth 2>/dev/null || echo "(file not found)"
+          echo ""
+          echo "--- Docker info ---"
+          docker info 2>&1 | head -20
+          echo ""
+          echo "--- DNS resolution ---"
+          nslookup $REGISTRY 2>&1 || true
+          echo ""
+          echo "--- Connectivity test ---"
+          curl -v "$REGISTRY/v2/" 2>&1 || true
+          echo "===== END DEBUG ====="
+
+      - name: Notify Slack
+        if: always()
+        run: |
+          STATUS="${{ job.status }}"
+          curl -sf -X POST "${{ secrets.SLACK_WEBHOOK }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"text\":\"Deploy #${{ github.run_number }} to ${{ inputs.environment || 'production' }}: ${STATUS}\"}"
+          echo "✓ Notification sent"

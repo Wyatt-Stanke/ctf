@@ -1,0 +1,54 @@
+name: Cleanup Stale Deployments
+
+on:
+  schedule:
+    - cron: '0 4 * * 0'  # every Sunday at 04:00 UTC
+  workflow_dispatch:
+
+env:
+  REGISTRY: registry.nimbusops.internal
+  KEEP_LAST: 10
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Prune old images from registry
+        run: |
+          TAGS=$(aws ecr describe-images \
+            --repository-name status-dash \
+            --query 'sort_by(imageDetails,&imagePushedAt)[*].imageDigest' \
+            --output text)
+          TOTAL=$(echo "$TAGS" | wc -w)
+          DELETE_COUNT=$((TOTAL - KEEP_LAST))
+          if [ "$DELETE_COUNT" -gt 0 ]; then
+            echo "Pruning $DELETE_COUNT old images..."
+            echo "$TAGS" | head -n $DELETE_COUNT | while read digest; do
+              aws ecr batch-delete-image \
+                --repository-name status-dash \
+                --image-ids imageDigest=$digest
+            done
+          else
+            echo "Nothing to prune ($TOTAL images, keeping $KEEP_LAST)."
+          fi
+
+      - name: Clean up old ReplicaSets
+        run: |
+          kubectl delete rs \
+            -n status-dash \
+            --field-selector status.replicas=0 \
+            --ignore-not-found=true
+
+      - name: Report
+        run: |
+          echo "Cleanup completed at $(date -u)"

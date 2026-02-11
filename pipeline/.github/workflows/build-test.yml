@@ -1,0 +1,45 @@
+name: Build & Test
+
+on:
+  pull_request:
+    branches: [main]
+
+env:
+  REGISTRY: registry.nimbusops.internal
+  IMAGE_NAME: status-dash
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pull test base image
+        run: |
+          echo "${{ secrets.REGISTRY_TOKEN }}" | \
+            docker login $REGISTRY --username ci --password-stdin
+          docker pull $REGISTRY/test-base:latest
+
+      - name: Build test image
+        run: |
+          docker build --target test -t $IMAGE_NAME:test .
+
+      - name: Run linter
+        run: |
+          docker run --rm $IMAGE_NAME:test npm run lint
+
+      - name: Run unit tests
+        run: |
+          docker run --rm $IMAGE_NAME:test npm test -- --coverage
+
+      - name: Run integration tests
+        run: |
+          docker run --rm \
+            --network host \
+            $IMAGE_NAME:test npm run test:integration
+
+      - name: Upload coverage
+        if: success()
+        run: |
+          echo "Coverage report uploaded."

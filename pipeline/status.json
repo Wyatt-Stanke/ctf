@@ -1,0 +1,32 @@
+{
+	"services": [
+		{
+			"name": "API Gateway",
+			"status": "operational"
+		},
+		{
+			"name": "Auth Service",
+			"status": "operational"
+		},
+		{
+			"name": "Object Store",
+			"status": "operational"
+		},
+		{
+			"name": "Container Registry",
+			"status": "operational"
+		},
+		{
+			"name": "DNS (Internal)",
+			"status": "operational"
+		},
+		{
+			"name": "Job Queue",
+			"status": "operational"
+		},
+		{
+			"name": "Metrics Pipeline",
+			"status": "operational"
+		}
+	]
+}

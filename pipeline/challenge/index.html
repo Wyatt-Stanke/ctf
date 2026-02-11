@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CTF Challenge: Pipeline Exposure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0c0e13;
+        --surface: #13161d;
+        --surface-2: #1a1e27;
+        --border: #2a2f3a;
+        --text: #c8cdd8;
+        --text-dim: #6b7280;
+        --accent: #e05a33;
+        --accent-glow: #e05a3344;
+        --yellow: #fbbf24;
+      }
+
+      body {
+        font-family: "Source Serif 4", Georgia, serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 60px 20px;
+        line-height: 1.7;
+      }
+
+      .container {
+        max-width: 680px;
+        width: 100%;
+      }
+
+      .difficulty {
+        display: inline-block;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: var(--accent-glow);
+        padding: 4px 12px;
+        border-radius: 3px;
+        margin-bottom: 16px;
+      }
+
+      h1 {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 28px;
+        font-weight: 700;
+        color: #f0f2f6;
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+
+      .briefing {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 32px;
+        margin-bottom: 32px;
+      }
+
+      .briefing p {
+        font-size: 17px;
+        margin-bottom: 16px;
+      }
+
+      .briefing p:last-child {
+        margin-bottom: 0;
+      }
+
+      .notes {
+        background: var(--surface-2);
+        border-left: 3px solid var(--accent);
+        border-radius: 6px;
+        padding: 20px 24px;
+        margin-bottom: 32px;
+      }
+
+      .notes-title {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+
+      .notes p {
+        font-size: 15px;
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      .flag-format {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        color: var(--text-dim);
+        background: var(--surface-2);
+        padding: 8px 14px;
+        border-radius: 4px;
+        display: inline-block;
+        margin-top: 8px;
+      }
+
+      .target-link {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 20px 28px;
+        margin-bottom: 40px;
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .target-link:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 20px var(--accent-glow);
+      }
+
+      .target-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        margin-bottom: 6px;
+      }
+
+      .target-url {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 15px;
+        color: var(--accent);
+      }
+
+      .hints-section h2 {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        margin-bottom: 16px;
+      }
+
+      .hint {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        overflow: hidden;
+      }
+
+      .hint-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.15s;
+      }
+
+      .hint-header:hover {
+        background: var(--surface-2);
+      }
+
+      .hint-title {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 14px;
+        font-weight: 500;
+        color: #f0f2f6;
+      }
+
+      .hint-toggle {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--yellow);
+        background: none;
+        border: 1px solid var(--yellow);
+        border-radius: 4px;
+        padding: 3px 10px;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s;
+        flex-shrink: 0;
+        margin-left: 16px;
+      }
+
+      .hint-toggle:hover {
+        background: var(--yellow);
+        color: var(--bg);
+      }
+
+      .hint-body {
+        max-height: 0;
+        overflow: hidden;
+        transition:
+          max-height 0.35s ease,
+          padding 0.35s ease;
+      }
+
+      .hint-body.revealed {
+        max-height: 300px;
+      }
+
+      .hint-body-inner {
+        padding: 0 24px 20px 24px;
+        font-size: 16px;
+        font-style: italic;
+        color: var(--yellow);
+        opacity: 0.9;
+      }
+
+      .warning {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--text-dim);
+        text-align: center;
+        margin-top: 32px;
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="difficulty">Medium</div>
+      <h1>Pipeline</h1>
+
+      <div class="briefing">
+        <p>
+          The team at NimbusOps just shipped their status dashboard. Their
+          DevOps lead assures us the CI/CD pipeline is locked down tight, all
+          secrets are properly masked, all logs are clean. And they are — every
+          single build is green. But you know how these things go.
+        </p>
+        <p>Find the deploy key (flag).</p>
+        <div class="flag-format">Flag format: flag{...}</div>
+      </div>
+
+      <div class="notes">
+        <div class="notes-title">⚠ Important Note</div>
+        <p>
+          This challenge is hosted on GitHub Pages, but everything you need can
+          be accessed through the hosted site only. Looking at the source code
+          of the GitHub repository would be cheating. The challenge is meant to
+          be solved through the hosted site only. No cheating!
+        </p>
+      </div>
+
+      <div class="notes">
+        <div class="notes-title">
+          🗁 Less Important But Still Pretty Important Note
+        </div>
+        <p>
+          This
+          <code
+            style="
+              font-family: &quot;JetBrains Mono&quot;, monospace;
+              font-size: 13px;
+              background: var(--surface);
+              padding: 2px 6px;
+              border-radius: 3px;
+            "
+            >/challenge</code
+          >
+          page and anything under it is just a static page with the briefing,
+          notes, and hints. None of the actual challenge content lives under
+          this path. Your investigation starts at the target link above. Good
+          luck detective.
+        </p>
+      </div>
+
+      <a class="target-link" href="../" target="_blank">
+        <div class="target-label">Target</div>
+        <div class="target-url">NimbusOps Status Page →</div>
+      </a>
+
+      <div class="hints-section">
+        <h2>Hints</h2>
+
+        <div class="hint">
+          <div class="hint-header" onclick="toggleHint(this)">
+            <span class="hint-title">Hint 1</span>
+            <button class="hint-toggle">Reveal</button>
+          </div>
+          <div class="hint-body">
+            <div class="hint-body-inner">
+              "Google crawlers love to make discoveries, maybe too much.
+              Sometimes you have to prevent them from going places you don't
+              want them to go."
+            </div>
+          </div>
+        </div>
+
+        <div class="hint">
+          <div class="hint-header" onclick="toggleHint(this)">
+            <span class="hint-title">Hint 2</span>
+            <button class="hint-toggle">Reveal</button>
+          </div>
+          <div class="hint-body">
+            <div class="hint-body-inner">
+              "Not every tool is on the menu. Sometimes the most interesting
+              switches aren't exposed in the UI — you have to find a way to flip
+              them yourself."
+            </div>
+          </div>
+        </div>
+
+        <div class="hint">
+          <div class="hint-header" onclick="toggleHint(this)">
+            <span class="hint-title">Hint 3</span>
+            <button class="hint-toggle">Reveal</button>
+          </div>
+          <div class="hint-body">
+            <div class="hint-body-inner">
+              "GitHub Actions masks secrets by exact string match. What happens
+              when a secret is transformed before it reaches the log output?"
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="warning">
+        Think hard dad! Don't use hints unless you are 100% sure you have to.
+        Maybe even sleep on it!
+      </p>
+    </div>
+
+    <script>
+      function _toggleHint(header) {
+        const body = header.nextElementSibling;
+        const btn = header.querySelector(".hint-toggle");
+        const isRevealed = body.classList.contains("revealed");
+
+        if (!isRevealed) {
+          if (!body.dataset.confirmed) {
+            btn.textContent = "Sure?";
+            body.dataset.confirmed = "pending";
+            return;
+          }
+          if (body.dataset.confirmed === "pending") {
+            btn.textContent = "Really sure?";
+            body.dataset.confirmed = "confirm-again";
+            return;
+          }
+          body.classList.add("revealed");
+          btn.textContent = "Hide";
+          body.dataset.confirmed = "done";
+        } else {
+          body.classList.remove("revealed");
+          btn.textContent = "Reveal";
+          delete body.dataset.confirmed;
+        }
+      }
+    </script>
+  </body>
+</html>

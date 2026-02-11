@@ -1,0 +1,25 @@
+{
+	"latest_build": 120,
+	"latest_deploy": 120,
+	"runs": [
+		{
+			"id": 118,
+			"status": "success",
+			"date": "2026-02-03"
+		},
+		{
+			"id": 119,
+			"status": "success",
+			"date": "2026-02-07"
+		},
+		{
+			"id": 120,
+			"status": "success",
+			"date": "2026-02-09"
+		}
+	],
+	"naming": {
+		"build": "build-{id}.log",
+		"deploy": "deploy-{id}.log"
+	}
+}

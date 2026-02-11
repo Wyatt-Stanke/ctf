@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manual Deploy — NimbusOps</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+          sans-serif;
+        background: #0d1117;
+        color: #c9d1d9;
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #21262d;
+      }
+
+      .header svg {
+        flex-shrink: 0;
+      }
+
+      .header h1 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #f0f6fc;
+      }
+
+      .header .badge {
+        font-size: 11px;
+        font-weight: 500;
+        background: #1f6feb33;
+        color: #58a6ff;
+        padding: 2px 8px;
+        border-radius: 12px;
+        margin-left: auto;
+      }
+
+      .dispatch-box {
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        padding: 24px;
+        margin-bottom: 24px;
+      }
+
+      .dispatch-box .workflow-name {
+        font-size: 14px;
+        color: #8b949e;
+        margin-bottom: 16px;
+      }
+
+      .dispatch-box .workflow-name code {
+        color: #c9d1d9;
+        background: #0d1117;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 13px;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #f0f6fc;
+        margin-bottom: 6px;
+      }
+
+      .form-group select {
+        width: 100%;
+        max-width: 280px;
+        padding: 6px 12px;
+        font-size: 14px;
+        background: #0d1117;
+        color: #c9d1d9;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        outline: none;
+      }
+
+      .form-group select:focus {
+        border-color: #58a6ff;
+        box-shadow: 0 0 0 3px #1f6feb33;
+      }
+
+      .run-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        background: #238636;
+        border: 1px solid rgba(240, 246, 252, 0.1);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .run-btn:hover {
+        background: #2ea043;
+      }
+
+      .run-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .run-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .output-section {
+        margin-top: 24px;
+      }
+
+      .output-header {
+        font-size: 13px;
+        font-weight: 600;
+        color: #8b949e;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .output-header .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #30363d;
+      }
+
+      .output-header .dot.active {
+        background: #3fb950;
+        box-shadow: 0 0 6px #3fb95066;
+      }
+
+      .output-header .dot.running {
+        background: #d29922;
+        box-shadow: 0 0 6px #d2992266;
+      }
+
+      .output-header .dot.failed {
+        background: #f85149;
+        box-shadow: 0 0 6px #f8514966;
+      }
+
+      #build-output {
+        background: #010409;
+        border: 1px solid #21262d;
+        border-radius: 6px;
+        padding: 16px;
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-size: 12px;
+        line-height: 1.6;
+        color: #8b949e;
+        min-height: 200px;
+        max-height: 600px;
+        overflow-y: auto;
+        white-space: pre;
+        tab-size: 4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 16 16"
+          fill="#8b949e"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM8 0a8 8 0 100 16A8 8 0 008 0zM6.379 5.227A.25.25 0 006 5.442v5.117a.25.25 0 00.379.214l4.264-2.559a.25.25 0 000-.428L6.379 5.227z"
+          />
+        </svg>
+        <h1>Run workflow</h1>
+        <span class="badge">workflow_dispatch</span>
+      </div>
+
+      <div class="dispatch-box">
+        <div class="workflow-name">Workflow: <code>deploy-prod.yml</code></div>
+
+        <form id="dispatch-form" method="GET" action="">
+          <div class="form-group">
+            <label for="env-select">Environment</label>
+            <select id="env-select" name="environment">
+              <option value="production">production</option>
+              <option value="staging">staging</option>
+            </select>
+          </div>
+
+          <button type="submit" class="run-btn" id="run-btn">
+            <svg viewBox="0 0 16 16" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M6.379 5.227A.25.25 0 006 5.442v5.117a.25.25 0 00.379.214l4.264-2.559a.25.25 0 000-.428L6.379 5.227z"
+              />
+            </svg>
+            Run Deploy
+          </button>
+        </form>
+      </div>
+
+      <div class="output-section">
+        <div class="output-header">
+          <span class="dot" id="status-dot"></span>
+          <span>Build output</span>
+        </div>
+        <pre id="build-output"></pre>
+      </div>
+    </div>
+
+    <script>
+      // Restore selected env from query string
+      (() => {
+        var params = new URLSearchParams(window.location.search);
+        var env = params.get("environment");
+        if (env) {
+          var sel = document.getElementById("env-select");
+          if (sel) sel.value = env;
+          var dot = document.getElementById("status-dot");
+          if (dot) dot.classList.add("active");
+        }
+      })();
+    </script>
+    <script src="/js/ci-runner.js"></script>
+  </body>
+</html>

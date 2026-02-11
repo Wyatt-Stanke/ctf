@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /_logs/
+Disallow: /.github/
+Disallow: /.env.example

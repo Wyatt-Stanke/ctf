@@ -42,7 +42,8 @@
     svg.setAttribute('stroke-linejoin', 'round');
     
     // Copy attributes from the <i> element
-    for (const attr of attributes) {
+    const attrs = Array.from(attributes);
+    for (const attr of attrs) {
       if (attr.name !== 'data-lucide') {
         svg.setAttribute(attr.name, attr.value);
       }

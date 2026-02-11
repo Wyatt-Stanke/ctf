@@ -881,3 +881,16 @@ a:hover {
 .ghes-footer .ghes-version {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
+
+/* ── Lucide Icons ──────────────────────────────────────────────────────────*/
+/* Ensure Lucide icons inherit color and display properly */
+i[data-lucide] {
+  display: inline-block;
+  vertical-align: middle;
+  color: currentColor;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Commits · NimbusOps/status-dash — GitHub Enterprise Server</title>
+    <link rel="stylesheet" href="ghes.css" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .commits-list { border: 1px solid var(--ghes-border); border-radius: 6px; overflow: hidden; }
+      .commit-group-header { padding: 10px 16px; background: var(--ghes-surface); border-bottom: 1px solid var(--ghes-border); font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+      .commit-group-header i { color: var(--ghes-text-muted); }
+      .commit-row { display: flex; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--ghes-border-subtle); gap: 12px; }
+      .commit-row:last-child { border-bottom: none; }
+      .commit-msg { flex: 1; min-width: 0; }
+      .commit-msg a { font-size: 14px; font-weight: 500; color: var(--ghes-text); text-decoration: none; }
+      .commit-msg a:hover { color: var(--ghes-link); }
+      .commit-meta { font-size: 12px; color: var(--ghes-text-muted); margin-top: 2px; }
+      .commit-meta a { color: var(--ghes-link); text-decoration: none; }
+      .commit-sha { font-family: ui-monospace, monospace; font-size: 12px; padding: 4px 8px; border: 1px solid var(--ghes-border); border-radius: 6px; color: var(--ghes-link); text-decoration: none; background: var(--ghes-surface); white-space: nowrap; }
+      .commit-sha:hover { background: var(--ghes-link); color: #fff; }
+      .commit-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--ghes-surface-hover); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--ghes-text-muted); flex-shrink: 0; }
+      .commit-status { width: 16px; height: 16px; flex-shrink: 0; }
+      .commit-status-ok { color: var(--ghes-green); }
+      .commit-status-fail { color: #f85149; }
+      .branch-selector { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+      .branch-btn { display: flex; align-items: center; gap: 6px; padding: 5px 12px; background: var(--ghes-btn-bg); border: 1px solid var(--ghes-border); border-radius: 6px; font-size: 13px; color: var(--ghes-text); cursor: pointer; }
+      .branch-btn i { color: var(--ghes-text-muted); }
+      .commit-count { font-size: 13px; color: var(--ghes-text-muted); }
+    </style>
+  </head>
+  <body>
+    <header class="ghes-header">
+      <div class="ghes-header-inner">
+        <a class="ghes-logo" href="index.html">
+          <svg height="32" viewBox="0 0 16 16" width="32"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" /></svg>
+          <span class="ghes-enterprise-badge">Enterprise</span>
+        </a>
+        <div class="ghes-header-search"><input type="text" placeholder="Search or jump to…" /></div>
+        <div class="ghes-header-right">
+          <span class="ghes-header-icon"><i data-lucide="plus" width="16" height="16"></i></span>
+          <span class="ghes-header-icon"><i data-lucide="bell" width="16" height="16"></i><span class="ghes-notification-dot"></span></span>
+          <div class="ghes-avatar-dropdown"><div class="ghes-avatar">MS</div><i data-lucide="chevron-down" width="12" height="12"></i></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="repo-header">
+      <div class="repo-breadcrumb">
+        <i data-lucide="book-open" width="16" height="16" style="color: #7d8590"></i>
+        <a href="repo.html" class="repo-owner">NimbusOps</a>
+        <span class="repo-separator">/</span>
+        <a href="repo.html" class="repo-name">status-dash</a>
+        <span class="repo-visibility">Internal</span>
+      </div>
+      <nav class="repo-tabs">
+        <a class="repo-tab active" href="repo.html"><i data-lucide="book-open" width="16" height="16"></i> Code</a>
+        <a class="repo-tab" href="issues.html"><i data-lucide="circle-dot" width="16" height="16"></i> Issues <span class="counter">3</span></a>
+        <a class="repo-tab" href="pulls.html"><i data-lucide="git-pull-request" width="16" height="16"></i> Pull requests <span class="counter">1</span></a>
+        <a class="repo-tab" href="actions.html"><i data-lucide="play" width="16" height="16"></i> Actions</a>
+        <a class="repo-tab" href="#"><i data-lucide="layout-grid" width="16" height="16"></i> Projects</a>
+        <a class="repo-tab" href="wiki.html"><i data-lucide="book-text" width="16" height="16"></i> Wiki</a>
+        <a class="repo-tab" href="#"><i data-lucide="shield" width="16" height="16"></i> Security</a>
+        <a class="repo-tab" href="#"><i data-lucide="settings" width="16" height="16"></i> Settings</a>
+      </nav>
+    </div>
+
+    <div class="page-body">
+      <div class="branch-selector">
+        <div class="branch-btn"><i data-lucide="git-branch" width="14" height="14"></i> main <i data-lucide="chevron-down" width="12" height="12"></i></div>
+        <span class="commit-count"><i data-lucide="git-commit-horizontal" width="14" height="14" style="vertical-align: middle; color: var(--ghes-text-subtle);"></i> <strong>47</strong> commits</span>
+      </div>
+
+      <div class="commits-list">
+        <!-- February 2026 -->
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Feb 9, 2026</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">fix: correct status indicator colors for degraded state</a>
+            <div class="commit-meta"><a href="#">akovacs</a> committed on Feb 9, 2026</div>
+          </div>
+          <div class="commit-avatar">AK</div>
+          <a class="commit-sha" href="#">f14d9a2</a>
+        </div>
+
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Feb 7, 2026</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">chore: add registry_override and skip_preflight inputs</a>
+            <div class="commit-meta"><a href="#">jpark</a> committed on Feb 7, 2026</div>
+          </div>
+          <div class="commit-avatar">JP</div>
+          <a class="commit-sha" href="#">3bc0e55</a>
+        </div>
+
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Feb 3, 2026</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">feat: redesign status page with new component library</a>
+            <div class="commit-meta"><a href="#">akovacs</a> committed on Feb 3, 2026</div>
+          </div>
+          <div class="commit-avatar">AK</div>
+          <a class="commit-sha" href="#">a7f2d81</a>
+        </div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">Merge pull request #58 from NimbusOps/redesign-v2</a>
+            <div class="commit-meta"><a href="#">msantiago</a> committed on Feb 3, 2026</div>
+          </div>
+          <div class="commit-avatar">MS</div>
+          <a class="commit-sha" href="#">b1e4c99</a>
+        </div>
+
+        <!-- January 2026 -->
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Jan 28, 2026</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-fail"><i data-lucide="x-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">fix: update registry endpoint for DNS migration</a>
+            <div class="commit-meta"><a href="#">jpark</a> committed on Jan 28, 2026 · <span style="color:#f85149;">deploy failed</span></div>
+          </div>
+          <div class="commit-avatar">JP</div>
+          <a class="commit-sha" href="#">e9a1c34</a>
+        </div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">fix: resolve DNS for registry.nimbusops.internal (retry)</a>
+            <div class="commit-meta"><a href="#">jpark</a> committed on Jan 28, 2026</div>
+          </div>
+          <div class="commit-avatar">JP</div>
+          <a class="commit-sha" href="#">52bf1a0</a>
+        </div>
+
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Jan 22, 2026</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">feat: add manual workflow_dispatch trigger for deploys</a>
+            <div class="commit-meta"><a href="#">jpark</a> committed on Jan 22, 2026</div>
+          </div>
+          <div class="commit-avatar">JP</div>
+          <a class="commit-sha" href="#">d47a823</a>
+        </div>
+
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Jan 15, 2026</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">feat: add debug dump step for failure diagnostics</a>
+            <div class="commit-meta"><a href="#">msantiago</a> committed on Jan 15, 2026</div>
+          </div>
+          <div class="commit-avatar">MS</div>
+          <a class="commit-sha" href="#">8c3ef17</a>
+        </div>
+
+        <!-- December 2025 -->
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Dec 19, 2025</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">chore: add stale-cleanup workflow for old images</a>
+            <div class="commit-meta"><a href="#">msantiago</a> committed on Dec 19, 2025</div>
+          </div>
+          <div class="commit-avatar">MS</div>
+          <a class="commit-sha" href="#">aa90b12</a>
+        </div>
+
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Dec 10, 2025</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">feat: CI/CD deploy pipeline via GitHub Actions</a>
+            <div class="commit-meta"><a href="#">jpark</a> committed on Dec 10, 2025</div>
+          </div>
+          <div class="commit-avatar">JP</div>
+          <a class="commit-sha" href="#">c5f9d24</a>
+        </div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">Merge pull request #51 from NimbusOps/cicd-pipeline</a>
+            <div class="commit-meta"><a href="#">msantiago</a> committed on Dec 10, 2025</div>
+          </div>
+          <div class="commit-avatar">MS</div>
+          <a class="commit-sha" href="#">71d6e38</a>
+        </div>
+
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Dec 2, 2025</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">chore: resolve DNS issues during deploy (#50)</a>
+            <div class="commit-meta"><a href="#">jpark</a> committed on Dec 2, 2025</div>
+          </div>
+          <div class="commit-avatar">JP</div>
+          <a class="commit-sha" href="#">4e21f0a</a>
+        </div>
+
+        <!-- November 2025 -->
+        <div class="commit-group-header"><i data-lucide="git-commit-horizontal" width="16" height="16"></i> Commits on Nov 14, 2025</div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">feat: initial status dashboard page</a>
+            <div class="commit-meta"><a href="#">msantiago</a> committed on Nov 14, 2025</div>
+          </div>
+          <div class="commit-avatar">MS</div>
+          <a class="commit-sha" href="#">01a83b7</a>
+        </div>
+        <div class="commit-row">
+          <span class="commit-status commit-status-ok"><i data-lucide="check-circle" width="16" height="16"></i></span>
+          <div class="commit-msg">
+            <a href="#">Initial commit</a>
+            <div class="commit-meta"><a href="#">msantiago</a> committed on Nov 14, 2025</div>
+          </div>
+          <div class="commit-avatar">MS</div>
+          <a class="commit-sha" href="#">0001a0f</a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="ghes-footer">
+      <div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Security</a><a href="#">Status</a><a href="#">Docs</a></div>
+      <span class="ghes-version">GitHub Enterprise Server 3.13.2</span>
+    </footer>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

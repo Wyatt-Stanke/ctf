@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Issues · NimbusOps/status-dash — GitHub Enterprise Server</title>
+    <link rel="stylesheet" href="ghes.css" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <!-- ── GHES Header ──────────────────────────────────────────────── -->
+    <header class="ghes-header">
+      <div class="ghes-header-inner">
+        <a class="ghes-logo" href="index.html">
+          <svg height="32" viewBox="0 0 16 16" width="32">
+            <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
+          </svg>
+          <span class="ghes-enterprise-badge">Enterprise</span>
+        </a>
+
+        <div class="ghes-header-search">
+          <input type="text" placeholder="Search or jump to…" />
+        </div>
+
+        <div class="ghes-header-right">
+          <span class="ghes-header-icon">
+            <i data-lucide="plus" width="16" height="16"></i>
+          </span>
+          <span class="ghes-header-icon">
+            <i data-lucide="bell" width="16" height="16"></i>
+            <span class="ghes-notification-dot"></span>
+          </span>
+          <div class="ghes-avatar-dropdown">
+            <div class="ghes-avatar">MS</div>
+            <i data-lucide="chevron-down" width="12" height="12"></i>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Repo header ──────────────────────────────────────────────── -->
+    <div class="repo-header">
+      <div class="repo-breadcrumb">
+        <i data-lucide="book-open" width="16" height="16" style="color: #7d8590"></i>
+        <a href="repo.html" class="repo-owner">NimbusOps</a>
+        <span class="repo-separator">/</span>
+        <a href="repo.html" class="repo-name">status-dash</a>
+        <span class="repo-visibility">Internal</span>
+      </div>
+
+      <nav class="repo-tabs">
+        <a class="repo-tab" href="repo.html">
+          <i data-lucide="book-open" width="16" height="16"></i>
+          Code
+        </a>
+        <a class="repo-tab active" href="issues.html">
+          <i data-lucide="circle-dot" width="16" height="16"></i>
+          Issues
+          <span class="counter">3</span>
+        </a>
+        <a class="repo-tab" href="pulls.html">
+          <i data-lucide="git-pull-request" width="16" height="16"></i>
+          Pull requests
+          <span class="counter">1</span>
+        </a>
+        <a class="repo-tab" href="actions.html">
+          <i data-lucide="play" width="16" height="16"></i>
+          Actions
+        </a>
+        <a class="repo-tab" href="#">
+          <i data-lucide="layout-grid" width="16" height="16"></i>
+          Projects
+        </a>
+        <a class="repo-tab" href="wiki.html">
+          <i data-lucide="book-text" width="16" height="16"></i>
+          Wiki
+        </a>
+        <a class="repo-tab" href="#">
+          <i data-lucide="shield" width="16" height="16"></i>
+          Security
+        </a>
+        <a class="repo-tab" href="#">
+          <i data-lucide="settings" width="16" height="16"></i>
+          Settings
+        </a>
+      </nav>
+    </div>
+
+    <!-- ── Page content ─────────────────────────────────────────────── -->
+    <div class="page-body">
+      <!-- Filter bar -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="display:flex;gap:8px;">
+          <button class="ghes-btn" style="gap:6px;font-weight:600;">
+            <i data-lucide="circle-dot" width="14" height="14" style="color:var(--ghes-green);"></i>
+            3 Open
+          </button>
+          <button class="ghes-btn" style="gap:6px;color:var(--ghes-text-muted);">
+            <i data-lucide="check" width="14" height="14"></i>
+            14 Closed
+          </button>
+        </div>
+        <span style="margin-left:auto;font-size:13px;color:var(--ghes-text-muted);">
+          Author · Label · Projects · Milestones · Assignee · Sort
+        </span>
+      </div>
+
+      <!-- Issue list -->
+      <div style="background:var(--ghes-surface);border:1px solid var(--ghes-border);border-radius:8px;overflow:hidden;">
+
+        <!-- Open issues -->
+        <div class="run-row" style="border-radius:8px 8px 0 0;">
+          <i data-lucide="circle-dot" width="16" height="16" style="color:var(--ghes-green);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="#" style="font-size:16px;">"Coffee Roaster" status endpoint — joke or real?</a>
+            <div style="display:flex;gap:6px;margin-top:4px;">
+              <span style="font-size:12px;padding:1px 8px;border-radius:12px;border:1px solid #3fb95088;color:var(--ghes-green);font-weight:500;">question</span>
+            </div>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#68 opened 3 days ago by <strong style="color:var(--ghes-text);">akovacs</strong></span>
+              <span style="margin-left:auto;display:flex;align-items:center;gap:4px;color:var(--ghes-text-muted);">
+                <i data-lucide="message-circle" width="14" height="14"></i> 4
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="run-row">
+          <i data-lucide="circle-dot" width="16" height="16" style="color:var(--ghes-green);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="#" style="font-size:16px;">Registry migration plan: move to OIDC auth</a>
+            <div style="display:flex;gap:6px;margin-top:4px;">
+              <span style="font-size:12px;padding:1px 8px;border-radius:12px;border:1px solid #a371f788;color:var(--ghes-purple);font-weight:500;">enhancement</span>
+              <span style="font-size:12px;padding:1px 8px;border-radius:12px;border:1px solid #d2992288;color:var(--ghes-yellow);font-weight:500;">infra</span>
+            </div>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#65 opened 2 weeks ago by <strong style="color:var(--ghes-text);">jpark</strong></span>
+              <span style="margin-left:auto;display:flex;align-items:center;gap:4px;color:var(--ghes-text-muted);">
+                <i data-lucide="message-circle" width="14" height="14"></i> 7
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="run-row">
+          <i data-lucide="circle-dot" width="16" height="16" style="color:var(--ghes-green);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="issue-55.html" style="font-size:16px;">Are our secrets actually safe in Actions logs?</a>
+            <div style="display:flex;gap:6px;margin-top:4px;">
+              <span style="font-size:12px;padding:1px 8px;border-radius:12px;border:1px solid #3fb95088;color:var(--ghes-green);font-weight:500;">question</span>
+              <span style="font-size:12px;padding:1px 8px;border-radius:12px;border:1px solid #58a6ff88;color:var(--ghes-link);font-weight:500;">security</span>
+            </div>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#55 opened 5 weeks ago by <strong style="color:var(--ghes-text);">akovacs</strong></span>
+              <span style="margin-left:auto;display:flex;align-items:center;gap:4px;color:var(--ghes-text-muted);">
+                <i data-lucide="message-circle" width="14" height="14"></i> 3
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider: Closed issues -->
+        <div style="padding:8px 16px;font-size:12px;color:var(--ghes-text-subtle);background:var(--ghes-bg);border-top:1px solid var(--ghes-border);">
+          <i data-lucide="check" width="12" height="12" style="vertical-align:middle;"></i>
+          14 closed issues
+        </div>
+
+        <div class="run-row">
+          <i data-lucide="circle-check-big" width="16" height="16" style="color:var(--ghes-purple);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="#" style="font-size:16px;color:var(--ghes-text-muted);">Stale images eating disk on registry</a>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#62 closed 3 weeks ago by <strong style="color:var(--ghes-text);">msantiago</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="run-row">
+          <i data-lucide="circle-check-big" width="16" height="16" style="color:var(--ghes-purple);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="#" style="font-size:16px;color:var(--ghes-text-muted);">Add manual dispatch for emergency deploys</a>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#53 closed 6 weeks ago by <strong style="color:var(--ghes-text);">jpark</strong> — resolved by <a href="pulls.html">#54</a></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="run-row">
+          <i data-lucide="circle-check-big" width="16" height="16" style="color:var(--ghes-purple);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="#" style="font-size:16px;color:var(--ghes-text-muted);">Deploy fails with "registry unreachable" after DNS change</a>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#49 closed 2 months ago by <strong style="color:var(--ghes-text);">msantiago</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="run-row">
+          <i data-lucide="circle-check-big" width="16" height="16" style="color:var(--ghes-purple);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="#" style="font-size:16px;color:var(--ghes-text-muted);">Need a status page ASAP</a>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#42 closed 3 months ago by <strong style="color:var(--ghes-text);">msantiago</strong> — resolved by <a href="pulls.html">#47</a></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="run-row">
+          <i data-lucide="circle-check-big" width="16" height="16" style="color:var(--ghes-purple);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="#" style="font-size:16px;color:var(--ghes-text-muted);">Healthcheck endpoint returning 404 on fresh deploys</a>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#38 closed 3 months ago by <strong style="color:var(--ghes-text);">jpark</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="run-row">
+          <i data-lucide="circle-check-big" width="16" height="16" style="color:var(--ghes-purple);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="#" style="font-size:16px;color:var(--ghes-text-muted);">Set up container registry authentication</a>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#31 closed 4 months ago by <strong style="color:var(--ghes-text);">msantiago</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="run-row" style="border-radius:0 0 8px 8px;">
+          <i data-lucide="circle-check-big" width="16" height="16" style="color:var(--ghes-purple);flex-shrink:0;"></i>
+          <div class="run-info">
+            <a class="run-title" href="#" style="font-size:16px;color:var(--ghes-text-muted);">Evaluate self-hosted runners vs. GitHub-hosted</a>
+            <div class="run-meta" style="margin-top:6px;">
+              <span>#24 closed 5 months ago by <strong style="color:var(--ghes-text);">msantiago</strong></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Footer ───────────────────────────────────────────────────── -->
+    <footer class="ghes-footer">
+      <div class="footer-links">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Security</a>
+        <a href="#">Status</a>
+        <a href="#">Docs</a>
+      </div>
+      <span class="ghes-version">GitHub Enterprise Server 3.13.2</span>
+    </footer>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

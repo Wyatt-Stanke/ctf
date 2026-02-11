@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>On-Call Runbook · Wiki · NimbusOps/status-dash — GitHub Enterprise Server</title>
+    <link rel="stylesheet" href="ghes.css" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .wiki-layout { display: grid; grid-template-columns: 260px 1fr; gap: 24px; }
+      .wiki-sidebar { border-right: 1px solid var(--ghes-border-subtle); padding-right: 20px; }
+      .wiki-sidebar-title { font-size: 15px; font-weight: 600; color: var(--ghes-text); margin-bottom: 12px; }
+      .wiki-page-list { list-style: none; }
+      .wiki-page-list li { margin-bottom: 2px; }
+      .wiki-page-list a { display: block; padding: 6px 10px; font-size: 13px; border-radius: 6px; color: var(--ghes-text-muted); text-decoration: none; }
+      .wiki-page-list a:hover { background: var(--ghes-surface-hover); color: var(--ghes-text); }
+      .wiki-page-list a.active { background: rgba(56,139,253,0.15); color: var(--ghes-link); font-weight: 600; }
+      .wiki-content { min-width: 0; }
+      .wiki-content h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--ghes-border); }
+      .wiki-content h2 { font-size: 20px; font-weight: 600; margin-top: 28px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--ghes-border-subtle); }
+      .wiki-content h3 { font-size: 16px; font-weight: 600; margin-top: 20px; margin-bottom: 8px; }
+      .wiki-content p { font-size: 14px; line-height: 1.7; margin-bottom: 12px; color: var(--ghes-text); }
+      .wiki-content ul, .wiki-content ol { margin: 8px 0 16px 20px; font-size: 14px; line-height: 1.7; }
+      .wiki-content li { margin-bottom: 4px; }
+      .wiki-content code { font-size: 13px; background: var(--ghes-btn-bg); padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, monospace; }
+      .wiki-content pre { background: var(--ghes-bg); border: 1px solid var(--ghes-border); border-radius: 6px; padding: 16px; margin: 12px 0; overflow-x: auto; font-size: 13px; font-family: ui-monospace, monospace; line-height: 1.5; }
+      .wiki-content table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+      .wiki-content th, .wiki-content td { padding: 8px 12px; text-align: left; border: 1px solid var(--ghes-border); }
+      .wiki-content th { background: var(--ghes-surface); font-weight: 600; }
+      .wiki-meta { font-size: 12px; color: var(--ghes-text-subtle); margin-bottom: 20px; }
+      .wiki-content .callout { background: rgba(56,139,253,0.1); border: 1px solid rgba(56,139,253,0.4); border-radius: 6px; padding: 12px 16px; margin: 12px 0; font-size: 14px; }
+      .wiki-content .callout-warn { background: rgba(210,153,34,0.1); border-color: rgba(210,153,34,0.4); }
+      .wiki-content .callout-danger { background: rgba(248,81,73,0.1); border-color: rgba(248,81,73,0.4); }
+    </style>
+  </head>
+  <body>
+    <header class="ghes-header">
+      <div class="ghes-header-inner">
+        <a class="ghes-logo" href="index.html">
+          <svg height="32" viewBox="0 0 16 16" width="32"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" /></svg>
+          <span class="ghes-enterprise-badge">Enterprise</span>
+        </a>
+        <div class="ghes-header-search"><input type="text" placeholder="Search or jump to…" /></div>
+        <div class="ghes-header-right">
+          <span class="ghes-header-icon"><i data-lucide="plus" width="16" height="16"></i></span>
+          <span class="ghes-header-icon"><i data-lucide="bell" width="16" height="16"></i><span class="ghes-notification-dot"></span></span>
+          <div class="ghes-avatar-dropdown"><div class="ghes-avatar">MS</div><i data-lucide="chevron-down" width="12" height="12"></i></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="repo-header">
+      <div class="repo-breadcrumb">
+        <i data-lucide="book-open" width="16" height="16" style="color: #7d8590"></i>
+        <a href="repo.html" class="repo-owner">NimbusOps</a>
+        <span class="repo-separator">/</span>
+        <a href="repo.html" class="repo-name">status-dash</a>
+        <span class="repo-visibility">Internal</span>
+      </div>
+      <nav class="repo-tabs">
+        <a class="repo-tab" href="repo.html"><i data-lucide="book-open" width="16" height="16"></i> Code</a>
+        <a class="repo-tab" href="issues.html"><i data-lucide="circle-dot" width="16" height="16"></i> Issues <span class="counter">3</span></a>
+        <a class="repo-tab" href="pulls.html"><i data-lucide="git-pull-request" width="16" height="16"></i> Pull requests <span class="counter">1</span></a>
+        <a class="repo-tab" href="actions.html"><i data-lucide="play" width="16" height="16"></i> Actions</a>
+        <a class="repo-tab" href="#"><i data-lucide="layout-grid" width="16" height="16"></i> Projects</a>
+        <a class="repo-tab active" href="wiki.html"><i data-lucide="book-text" width="16" height="16"></i> Wiki</a>
+        <a class="repo-tab" href="#"><i data-lucide="shield" width="16" height="16"></i> Security</a>
+        <a class="repo-tab" href="#"><i data-lucide="settings" width="16" height="16"></i> Settings</a>
+      </nav>
+    </div>
+
+    <div class="page-body">
+      <div class="wiki-layout">
+        <div class="wiki-sidebar">
+          <div class="wiki-sidebar-title">Pages</div>
+          <ul class="wiki-page-list">
+            <li><a href="wiki.html">Home</a></li>
+            <li><a href="wiki-runbook.html" class="active">On-Call Runbook</a></li>
+            <li><a href="wiki-architecture.html">Architecture Overview</a></li>
+            <li><a href="wiki-secrets.html">Secret Management</a></li>
+            <li><a href="wiki-postmortem-nov.html">Postmortem: Nov 14 Outage</a></li>
+          </ul>
+        </div>
+        <div class="wiki-content">
+          <h1>On-Call Runbook</h1>
+          <div class="wiki-meta">Last edited by <strong style="color:var(--ghes-text);">msantiago</strong> 2 weeks ago · <a href="#">8 revisions</a></div>
+
+          <p>This document covers the most common incidents and how to resolve them. If you're on call and something breaks, start here.</p>
+
+          <div class="callout-warn callout">
+            <strong>⚠️ Escalation:</strong> If you can't resolve within 15 minutes, escalate to Marina (<code>@msantiago</code>) via PagerDuty or Slack DM. Don't try to be a hero. ☕
+          </div>
+
+          <h2>1. Deploy Failure</h2>
+          <h3>Symptoms</h3>
+          <ul>
+            <li>Slack notification: "Deploy #NNN to production: failure"</li>
+            <li>Actions tab shows a red ✗ on the latest run</li>
+          </ul>
+
+          <h3>Diagnosis</h3>
+          <ol>
+            <li>Check the <a href="actions.html">Actions tab</a> — click into the failed run</li>
+            <li>Look at which step failed. Common failure points:
+              <ul>
+                <li><strong>Step 2 (Pre-flight)</strong> — registry unreachable. Check DNS. Try <code>nslookup registry.nimbusops.internal</code> from a runner.</li>
+                <li><strong>Step 4 (Auth)</strong> — deploy key issue. Verify the <code>DEPLOY_KEY</code> secret is still set in repo settings.</li>
+                <li><strong>Step 5 (Build)</strong> — Docker build error. Usually a syntax issue in Dockerfile or missing file.</li>
+                <li><strong>Step 6 (Deploy)</strong> — Kubernetes rollout timeout. Check pod status.</li>
+              </ul>
+            </li>
+            <li>If the <code>if: failure()</code> debug step ran, it dumps useful context: auth file, Docker info, DNS, and connectivity.</li>
+          </ol>
+
+          <h3>Quick Fixes</h3>
+          <pre># Re-run the deploy manually
+gh workflow run deploy-prod.yml -f environment=production
+
+# If DNS is flaky, skip the pre-flight check
+gh workflow run deploy-prod.yml \
+  -f environment=production \
+  -f skip_preflight=true
+
+# Check pod status
+kubectl get pods -n status-dash
+kubectl describe pod -n status-dash -l app=status-dash</pre>
+
+          <h2>2. Status Page Not Updating</h2>
+          <h3>Symptoms</h3>
+          <ul>
+            <li>"Last updated" timestamp is stale (more than 2 minutes old)</li>
+            <li>Services show old data</li>
+          </ul>
+          <h3>Diagnosis</h3>
+          <ol>
+            <li>Verify <code>status.json</code> is recent: <code>curl -s https://status.nimbusops.internal/status.json | jq .updated_at</code></li>
+            <li>Check the monitoring-agent service is running: <code>kubectl get pods -n monitoring</code></li>
+            <li>Verify the cron job that writes <code>status.json</code> is healthy</li>
+          </ol>
+
+          <h2>3. Complete Site Down (502/503)</h2>
+          <h3>Symptoms</h3>
+          <ul>
+            <li>Browser shows "502 Bad Gateway" or "503 Service Unavailable"</li>
+            <li>Alerts from uptime monitoring</li>
+          </ul>
+          <h3>Diagnosis</h3>
+          <ol>
+            <li>Check the load balancer: <code>kubectl get svc -n status-dash</code></li>
+            <li>Check if pods are running: <code>kubectl get pods -n status-dash</code></li>
+            <li>Check nginx logs: <code>kubectl logs -n status-dash -l app=status-dash --tail=50</code></li>
+            <li>If all pods are CrashLooping, check the latest image for issues</li>
+          </ol>
+
+          <div class="callout-danger callout">
+            <strong>🚨 Emergency rollback:</strong> If the site is completely broken after a deploy:
+            <pre style="margin:8px 0 0;border:none;">kubectl rollout undo deployment/status-dash -n status-dash</pre>
+          </div>
+
+          <h2>4. Registry Authentication Issues</h2>
+          <p>If the deploy fails at the auth step, the <code>DEPLOY_KEY</code> secret might need rotating. Contact Marina — she manages the registry credentials. The key is stored as a GitHub Actions secret and is base64-encoded when written to the auth file during deploys.</p>
+
+          <h2>Useful Commands</h2>
+          <pre># View recent deploys
+kubectl rollout history deployment/status-dash -n status-dash
+
+# Check resource usage
+kubectl top pods -n status-dash
+
+# Tail logs
+kubectl logs -f -n status-dash -l app=status-dash
+
+# Manually trigger a deploy
+gh workflow run deploy-prod.yml -f environment=production
+
+# View workflow runs
+gh run list --workflow=deploy-prod.yml --limit=10</pre>
+        </div>
+      </div>
+    </div>
+
+    <footer class="ghes-footer">
+      <div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Security</a><a href="#">Status</a><a href="#">Docs</a></div>
+      <span class="ghes-version">GitHub Enterprise Server 3.13.2</span>
+    </footer>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

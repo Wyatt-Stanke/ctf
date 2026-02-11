@@ -7,10 +7,16 @@ compiler directives where found.
 
 from __future__ import annotations
 
+import re
 import shutil
 from pathlib import Path
 
 from compiler.directives import apply_directive, detect_directive
+
+# Hidden markdown files (e.g. .foo.md, .solving-guide.md) are never
+# included in the build output.  They exist in the source tree purely
+# as developer/author documentation.
+_HIDDEN_MD_RE = re.compile(r"^\..+\.md$", re.IGNORECASE)
 
 
 def compile_site(source: Path, dest: Path) -> None:
@@ -32,6 +38,11 @@ def compile_site(source: Path, dest: Path) -> None:
 
         if src_file.is_dir():
             dst_file.mkdir(parents=True, exist_ok=True)
+            continue
+
+        # Skip hidden markdown files (.*.md) — author-only documentation
+        if _HIDDEN_MD_RE.match(src_file.name):
+            print(f"  skip   {rel}  (hidden markdown)")
             continue
 
         dst_file.parent.mkdir(parents=True, exist_ok=True)

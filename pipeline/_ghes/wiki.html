@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wiki · NimbusOps/status-dash — GitHub Enterprise Server</title>
+    <link rel="stylesheet" href="ghes.css" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .wiki-layout { display: grid; grid-template-columns: 260px 1fr; gap: 24px; }
+      .wiki-sidebar { border-right: 1px solid var(--ghes-border-subtle); padding-right: 20px; }
+      .wiki-sidebar-title { font-size: 15px; font-weight: 600; color: var(--ghes-text); margin-bottom: 12px; }
+      .wiki-page-list { list-style: none; }
+      .wiki-page-list li { margin-bottom: 2px; }
+      .wiki-page-list a { display: block; padding: 6px 10px; font-size: 13px; border-radius: 6px; color: var(--ghes-text-muted); text-decoration: none; }
+      .wiki-page-list a:hover { background: var(--ghes-surface-hover); color: var(--ghes-text); }
+      .wiki-page-list a.active { background: rgba(56,139,253,0.15); color: var(--ghes-link); font-weight: 600; }
+      .wiki-content { min-width: 0; }
+      .wiki-content h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--ghes-border); }
+      .wiki-content h2 { font-size: 20px; font-weight: 600; margin-top: 28px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--ghes-border-subtle); }
+      .wiki-content h3 { font-size: 16px; font-weight: 600; margin-top: 20px; margin-bottom: 8px; }
+      .wiki-content p { font-size: 14px; line-height: 1.7; margin-bottom: 12px; color: var(--ghes-text); }
+      .wiki-content ul, .wiki-content ol { margin: 8px 0 16px 20px; font-size: 14px; line-height: 1.7; }
+      .wiki-content li { margin-bottom: 4px; }
+      .wiki-content code { font-size: 13px; background: var(--ghes-btn-bg); padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, monospace; }
+      .wiki-content pre { background: var(--ghes-bg); border: 1px solid var(--ghes-border); border-radius: 6px; padding: 16px; margin: 12px 0; overflow-x: auto; font-size: 13px; font-family: ui-monospace, monospace; line-height: 1.5; }
+      .wiki-content table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+      .wiki-content th, .wiki-content td { padding: 8px 12px; text-align: left; border: 1px solid var(--ghes-border); }
+      .wiki-content th { background: var(--ghes-surface); font-weight: 600; }
+      .wiki-meta { font-size: 12px; color: var(--ghes-text-subtle); margin-bottom: 20px; }
+      .wiki-content .callout { background: rgba(56,139,253,0.1); border: 1px solid rgba(56,139,253,0.4); border-radius: 6px; padding: 12px 16px; margin: 12px 0; font-size: 14px; }
+      .wiki-content .callout-warn { background: rgba(210,153,34,0.1); border-color: rgba(210,153,34,0.4); }
+    </style>
+  </head>
+  <body>
+    <header class="ghes-header">
+      <div class="ghes-header-inner">
+        <a class="ghes-logo" href="index.html">
+          <svg height="32" viewBox="0 0 16 16" width="32"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" /></svg>
+          <span class="ghes-enterprise-badge">Enterprise</span>
+        </a>
+        <div class="ghes-header-search"><input type="text" placeholder="Search or jump to…" /></div>
+        <div class="ghes-header-right">
+          <span class="ghes-header-icon"><i data-lucide="plus" width="16" height="16"></i></span>
+          <span class="ghes-header-icon"><i data-lucide="bell" width="16" height="16"></i><span class="ghes-notification-dot"></span></span>
+          <div class="ghes-avatar-dropdown"><div class="ghes-avatar">MS</div><i data-lucide="chevron-down" width="12" height="12"></i></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="repo-header">
+      <div class="repo-breadcrumb">
+        <i data-lucide="book-open" width="16" height="16" style="color: #7d8590"></i>
+        <a href="repo.html" class="repo-owner">NimbusOps</a>
+        <span class="repo-separator">/</span>
+        <a href="repo.html" class="repo-name">status-dash</a>
+        <span class="repo-visibility">Internal</span>
+      </div>
+      <nav class="repo-tabs">
+        <a class="repo-tab" href="repo.html"><i data-lucide="book-open" width="16" height="16"></i> Code</a>
+        <a class="repo-tab" href="issues.html"><i data-lucide="circle-dot" width="16" height="16"></i> Issues <span class="counter">3</span></a>
+        <a class="repo-tab" href="pulls.html"><i data-lucide="git-pull-request" width="16" height="16"></i> Pull requests <span class="counter">1</span></a>
+        <a class="repo-tab" href="actions.html"><i data-lucide="play" width="16" height="16"></i> Actions</a>
+        <a class="repo-tab" href="#"><i data-lucide="layout-grid" width="16" height="16"></i> Projects</a>
+        <a class="repo-tab active" href="wiki.html"><i data-lucide="book-text" width="16" height="16"></i> Wiki</a>
+        <a class="repo-tab" href="#"><i data-lucide="shield" width="16" height="16"></i> Security</a>
+        <a class="repo-tab" href="#"><i data-lucide="settings" width="16" height="16"></i> Settings</a>
+      </nav>
+    </div>
+
+    <div class="page-body">
+      <div class="wiki-layout">
+        <div class="wiki-sidebar">
+          <div class="wiki-sidebar-title">Pages</div>
+          <ul class="wiki-page-list">
+            <li><a href="wiki.html" class="active">Home</a></li>
+            <li><a href="wiki-runbook.html">On-Call Runbook</a></li>
+            <li><a href="wiki-architecture.html">Architecture Overview</a></li>
+            <li><a href="wiki-secrets.html">Secret Management</a></li>
+            <li><a href="wiki-postmortem-nov.html">Postmortem: Nov 14 Outage</a></li>
+          </ul>
+        </div>
+        <div class="wiki-content">
+          <h1>Status Dashboard — Internal Wiki</h1>
+          <div class="wiki-meta">Last edited by <strong style="color:var(--ghes-text);">msantiago</strong> 6 days ago · <a href="#">12 revisions</a></div>
+
+          <p>Welcome to the internal wiki for the NimbusOps Status Dashboard. This is a reference for the team — please keep it up to date as we make changes.</p>
+
+          <h2>Quick Links</h2>
+          <table>
+            <tr><th>Resource</th><th>URL</th></tr>
+            <tr><td>Production</td><td><code>https://status.nimbusops.internal</code></td></tr>
+            <tr><td>Staging</td><td><code>https://status-staging.nimbusops.internal</code></td></tr>
+            <tr><td>Container Registry</td><td><code>registry.nimbusops.internal</code></td></tr>
+            <tr><td>GHES Repo</td><td><a href="repo.html">NimbusOps/status-dash</a></td></tr>
+            <tr><td>Slack Channel</td><td><code>#infra</code></td></tr>
+            <tr><td>On-Call Schedule</td><td><a href="#">PagerDuty</a></td></tr>
+          </table>
+
+          <h2>Team</h2>
+          <table>
+            <tr><th>Name</th><th>Role</th><th>GitHub</th></tr>
+            <tr><td>Marina Santiago</td><td>DevOps Lead</td><td><code>@msantiago</code></td></tr>
+            <tr><td>James Park</td><td>Senior Backend Engineer</td><td><code>@jpark</code></td></tr>
+            <tr><td>Alex Kovacs</td><td>Junior Developer</td><td><code>@akovacs</code></td></tr>
+          </table>
+
+          <h2>Key Workflows</h2>
+          <h3>Automated Deploy (push to main)</h3>
+          <p>Every push to <code>main</code> triggers the <code>deploy-prod.yml</code> workflow. It builds a Docker image, pushes it to the container registry, and rolls out the update to the Kubernetes cluster. The full pipeline takes ~90 seconds.</p>
+
+          <h3>Manual Deploy (workflow_dispatch)</h3>
+          <p>For emergency deploys or testing, use the <a href="dispatch.html">manual dispatch page</a> or the <code>gh</code> CLI:</p>
+          <pre>gh workflow run deploy-prod.yml \
+  -f environment=production</pre>
+
+          <div class="callout">
+            <strong>ℹ️ Note:</strong> The deploy workflow also accepts <code>registry_override</code> and <code>skip_preflight</code> inputs. These are for infra migration testing only — see James if you need to use them.
+          </div>
+
+          <h3>Stale Cleanup (weekly)</h3>
+          <p>The <code>stale-cleanup.yml</code> workflow runs every Sunday at 04:00 UTC. It prunes old container images from the registry, keeping the last 10, and deletes orphaned ReplicaSets from the cluster.</p>
+
+          <h2>Monitoring &amp; Alerts</h2>
+          <ul>
+            <li><strong>Healthcheck:</strong> Nginx healthcheck hits <code>/status.json</code> every 30s. Kubernetes uses this for liveness/readiness probes.</li>
+            <li><strong>Uptime:</strong> Monitored by our internal monitoring-agent. Alerts go to <code>#infra-alerts</code> in Slack.</li>
+            <li><strong>Deploy notifications:</strong> The deploy workflow posts to <code>#infra</code> via Slack webhook on success or failure.</li>
+          </ul>
+
+          <h2>Common Issues</h2>
+          <p>See the <a href="wiki-runbook.html">On-Call Runbook</a> for troubleshooting steps. Most common issues:</p>
+          <ol>
+            <li><strong>Image pull failures</strong> — check DNS resolution to <code>registry.nimbusops.internal</code></li>
+            <li><strong>Rollout stuck</strong> — check pod events with <code>kubectl describe pod -n status-dash</code></li>
+            <li><strong>Health check failing</strong> — verify <code>status.json</code> is present in the built image</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <footer class="ghes-footer">
+      <div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Security</a><a href="#">Status</a><a href="#">Docs</a></div>
+      <span class="ghes-version">GitHub Enterprise Server 3.13.2</span>
+    </footer>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

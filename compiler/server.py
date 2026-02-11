@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import mimetypes
 import posixpath
+import re
 import urllib.parse
 from functools import partial
 from http import HTTPStatus
@@ -18,6 +19,10 @@ from pathlib import Path
 from socketserver import ThreadingMixIn
 
 from compiler.directives import apply_directive, detect_directive
+
+# Hidden markdown files (e.g. .foo.md, .solving-guide.md) must never be
+# served — they contain author-only documentation / spoilers.
+_HIDDEN_MD_RE = re.compile(r"^\..+\.md$", re.IGNORECASE)
 
 
 class _ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
@@ -70,6 +75,11 @@ class _CompilerHandler(SimpleHTTPRequestHandler):
                 return super().send_head()
 
         if not file_path.is_file():
+            self.send_error(HTTPStatus.NOT_FOUND, "File not found")
+            return None
+
+        # Block hidden markdown files (.*.md)
+        if _HIDDEN_MD_RE.match(file_path.name):
             self.send_error(HTTPStatus.NOT_FOUND, "File not found")
             return None
 

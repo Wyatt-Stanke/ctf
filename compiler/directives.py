@@ -20,6 +20,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
+# Hidden markdown files (e.g. .foo.md) are excluded from directory listings.
+_HIDDEN_MD_RE = re.compile(r"^\..+\.md$", re.IGNORECASE)
+
 # ---------------------------------------------------------------------------
 # Directive detection
 # ---------------------------------------------------------------------------
@@ -76,10 +79,12 @@ def apply_directory_listing(file_path: Path, url_prefix: str = "/") -> str:
     """
     directory = file_path.parent
 
-    # Collect entries (skip the index file itself)
+    # Collect entries (skip the index file itself and hidden markdown files)
     entries: list[tuple[str, bool, float, int]] = []
     for child in sorted(directory.iterdir(), key=lambda p: p.name.lower()):
         if child.name == file_path.name:
+            continue
+        if _HIDDEN_MD_RE.match(child.name):
             continue
         is_dir = child.is_dir()
         stat = child.stat()

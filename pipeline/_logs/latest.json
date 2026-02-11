@@ -3,19 +3,40 @@
 	"latest_deploy": 120,
 	"runs": [
 		{
+			"id": 116,
+			"status": "failure",
+			"date": "2026-01-28",
+			"trigger": "push",
+			"actor": "jpark",
+			"commit": "e9a1c34",
+			"message": "fix: update registry endpoint for DNS migration"
+		},
+		{
 			"id": 118,
 			"status": "success",
-			"date": "2026-02-03"
+			"date": "2026-02-03",
+			"trigger": "push",
+			"actor": "akovacs",
+			"commit": "a7f2d81",
+			"message": "feat: redesign status page with new component library"
 		},
 		{
 			"id": 119,
 			"status": "success",
-			"date": "2026-02-07"
+			"date": "2026-02-07",
+			"trigger": "push",
+			"actor": "jpark",
+			"commit": "3bc0e55",
+			"message": "chore: add registry_override and skip_preflight inputs"
 		},
 		{
 			"id": 120,
 			"status": "success",
-			"date": "2026-02-09"
+			"date": "2026-02-09",
+			"trigger": "push",
+			"actor": "akovacs",
+			"commit": "f14d9a2",
+			"message": "fix: correct status indicator colors for degraded state"
 		}
 	],
 	"naming": {

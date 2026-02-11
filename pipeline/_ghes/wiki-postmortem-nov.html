@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Postmortem: Nov 14 Outage · Wiki · NimbusOps/status-dash — GitHub Enterprise Server</title>
+    <link rel="stylesheet" href="ghes.css" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .wiki-layout { display: grid; grid-template-columns: 260px 1fr; gap: 24px; }
+      .wiki-sidebar { border-right: 1px solid var(--ghes-border-subtle); padding-right: 20px; }
+      .wiki-sidebar-title { font-size: 15px; font-weight: 600; color: var(--ghes-text); margin-bottom: 12px; }
+      .wiki-page-list { list-style: none; }
+      .wiki-page-list li { margin-bottom: 2px; }
+      .wiki-page-list a { display: block; padding: 6px 10px; font-size: 13px; border-radius: 6px; color: var(--ghes-text-muted); text-decoration: none; }
+      .wiki-page-list a:hover { background: var(--ghes-surface-hover); color: var(--ghes-text); }
+      .wiki-page-list a.active { background: rgba(56,139,253,0.15); color: var(--ghes-link); font-weight: 600; }
+      .wiki-content { min-width: 0; }
+      .wiki-content h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--ghes-border); }
+      .wiki-content h2 { font-size: 20px; font-weight: 600; margin-top: 28px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--ghes-border-subtle); }
+      .wiki-content h3 { font-size: 16px; font-weight: 600; margin-top: 20px; margin-bottom: 8px; }
+      .wiki-content p { font-size: 14px; line-height: 1.7; margin-bottom: 12px; color: var(--ghes-text); }
+      .wiki-content ul, .wiki-content ol { margin: 8px 0 16px 20px; font-size: 14px; line-height: 1.7; }
+      .wiki-content li { margin-bottom: 4px; }
+      .wiki-content code { font-size: 13px; background: var(--ghes-btn-bg); padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, monospace; }
+      .wiki-content pre { background: var(--ghes-bg); border: 1px solid var(--ghes-border); border-radius: 6px; padding: 16px; margin: 12px 0; overflow-x: auto; font-size: 13px; font-family: ui-monospace, monospace; line-height: 1.5; }
+      .wiki-content table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+      .wiki-content th, .wiki-content td { padding: 8px 12px; text-align: left; border: 1px solid var(--ghes-border); }
+      .wiki-content th { background: var(--ghes-surface); font-weight: 600; }
+      .wiki-meta { font-size: 12px; color: var(--ghes-text-subtle); margin-bottom: 20px; }
+      .wiki-content .callout-danger { background: rgba(248,81,73,0.1); border: 1px solid rgba(248,81,73,0.4); border-radius: 6px; padding: 12px 16px; margin: 12px 0; font-size: 14px; }
+      .timeline-tbl td { vertical-align: top; }
+      .timeline-tbl .time { white-space: nowrap; font-family: ui-monospace, monospace; font-size: 13px; color: var(--ghes-text-muted); }
+    </style>
+  </head>
+  <body>
+    <header class="ghes-header">
+      <div class="ghes-header-inner">
+        <a class="ghes-logo" href="index.html">
+          <svg height="32" viewBox="0 0 16 16" width="32"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" /></svg>
+          <span class="ghes-enterprise-badge">Enterprise</span>
+        </a>
+        <div class="ghes-header-search"><input type="text" placeholder="Search or jump to…" /></div>
+        <div class="ghes-header-right">
+          <span class="ghes-header-icon"><i data-lucide="plus" width="16" height="16"></i></span>
+          <span class="ghes-header-icon"><i data-lucide="bell" width="16" height="16"></i><span class="ghes-notification-dot"></span></span>
+          <div class="ghes-avatar-dropdown"><div class="ghes-avatar">MS</div><i data-lucide="chevron-down" width="12" height="12"></i></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="repo-header">
+      <div class="repo-breadcrumb">
+        <i data-lucide="book-open" width="16" height="16" style="color: #7d8590"></i>
+        <a href="repo.html" class="repo-owner">NimbusOps</a>
+        <span class="repo-separator">/</span>
+        <a href="repo.html" class="repo-name">status-dash</a>
+        <span class="repo-visibility">Internal</span>
+      </div>
+      <nav class="repo-tabs">
+        <a class="repo-tab" href="repo.html"><i data-lucide="book-open" width="16" height="16"></i> Code</a>
+        <a class="repo-tab" href="issues.html"><i data-lucide="circle-dot" width="16" height="16"></i> Issues <span class="counter">3</span></a>
+        <a class="repo-tab" href="pulls.html"><i data-lucide="git-pull-request" width="16" height="16"></i> Pull requests <span class="counter">1</span></a>
+        <a class="repo-tab" href="actions.html"><i data-lucide="play" width="16" height="16"></i> Actions</a>
+        <a class="repo-tab" href="#"><i data-lucide="layout-grid" width="16" height="16"></i> Projects</a>
+        <a class="repo-tab active" href="wiki.html"><i data-lucide="book-text" width="16" height="16"></i> Wiki</a>
+        <a class="repo-tab" href="#"><i data-lucide="shield" width="16" height="16"></i> Security</a>
+        <a class="repo-tab" href="#"><i data-lucide="settings" width="16" height="16"></i> Settings</a>
+      </nav>
+    </div>
+
+    <div class="page-body">
+      <div class="wiki-layout">
+        <div class="wiki-sidebar">
+          <div class="wiki-sidebar-title">Pages</div>
+          <ul class="wiki-page-list">
+            <li><a href="wiki.html">Home</a></li>
+            <li><a href="wiki-runbook.html">On-Call Runbook</a></li>
+            <li><a href="wiki-architecture.html">Architecture Overview</a></li>
+            <li><a href="wiki-secrets.html">Secret Management</a></li>
+            <li><a href="wiki-postmortem-nov.html" class="active">Postmortem: Nov 14 Outage</a></li>
+          </ul>
+        </div>
+        <div class="wiki-content">
+          <h1>Postmortem: November 14, 2025 — Complete Platform Outage</h1>
+          <div class="wiki-meta">Last edited by <strong style="color:var(--ghes-text);">msantiago</strong> 2 months ago · <a href="#">2 revisions</a></div>
+
+          <div class="callout-danger">
+            <strong>🚨 Severity: Critical</strong> — Total platform outage for 1 hour 15 minutes. All services unreachable. 100% of users affected.
+          </div>
+
+          <h2>Summary</h2>
+          <table>
+            <tr><th>Duration</th><td>14:32 – 15:47 UTC (1h 15m)</td></tr>
+            <tr><th>Impact</th><td>100% of NimbusOps services unreachable</td></tr>
+            <tr><th>Root Cause</th><td>Automated load balancer config deployment removed all backend routing rules</td></tr>
+            <tr><th>Incident Commander</th><td>Marina Santiago (@msantiago)</td></tr>
+            <tr><th>Detection</th><td>Automated alerts (PagerDuty)</td></tr>
+            <tr><th>Time to Detect</th><td>2 minutes</td></tr>
+            <tr><th>Time to Resolve</th><td>1 hour 15 minutes</td></tr>
+          </table>
+
+          <h2>Timeline</h2>
+          <table class="timeline-tbl">
+            <tr><td class="time">14:30 UTC</td><td>Scheduled config deployment begins for the primary load balancer. The change was intended to add a new routing rule for an upcoming internal service.</td></tr>
+            <tr><td class="time">14:32 UTC</td><td>Config deployment completes. Due to a template rendering bug, <strong>all existing backend routing rules are removed</strong>. Only the new (not-yet-active) route remains.</td></tr>
+            <tr><td class="time">14:34 UTC</td><td>PagerDuty fires critical alerts. All uptime monitors report failure. Slack <code>#infra-alerts</code> lights up.</td></tr>
+            <tr><td class="time">14:36 UTC</td><td>Marina (on call) acknowledges the page. Initial suspicion: network partition or DNS failure.</td></tr>
+            <tr><td class="time">14:42 UTC</td><td>Marina confirms pods are running, DNS resolves. Starts investigating the load balancer.</td></tr>
+            <tr><td class="time">14:55 UTC</td><td>James joins the incident. They discover the load balancer has zero active backend routes. Identifies the config deploy as the trigger.</td></tr>
+            <tr><td class="time">15:05 UTC</td><td>Team attempts to revert the config, but the automated deployment tool requires a PR to the config repo. Manual override procedure is unclear.</td></tr>
+            <tr><td class="time">15:20 UTC</td><td>Marina manually applies the last-known-good config via the load balancer admin API. Services begin recovering.</td></tr>
+            <tr><td class="time">15:35 UTC</td><td>All services confirmed operational. PagerDuty incident resolved.</td></tr>
+            <tr><td class="time">15:47 UTC</td><td>Final verification complete. Incident closed.</td></tr>
+          </table>
+
+          <h2>Root Cause</h2>
+          <p>The load balancer configuration is managed via a Jinja2 template that iterates over a list of backend services. A recent refactor changed the variable name from <code>backends</code> to <code>services</code> in the data file, but the template was not updated. Jinja2 silently rendered an empty loop (since <code>backends</code> was now <code>undefined</code>), producing a config with zero routing rules.</p>
+          <p>The automated deployment tool applied this config without validation, because the pre-deploy check only verified that the config was syntactically valid YAML — it did not check that the routing table was non-empty.</p>
+
+          <h2>What Went Well</h2>
+          <ul>
+            <li>Detection was fast: PagerDuty alerted within 2 minutes</li>
+            <li>Marina was available and responded immediately</li>
+            <li>No data loss — all backend services continued running, they were just unreachable</li>
+          </ul>
+
+          <h2>What Went Poorly</h2>
+          <ul>
+            <li>The config deployment had <strong>no semantic validation</strong> — it only checked YAML syntax, not that the resulting config was sane</li>
+            <li>The rollback procedure was unclear and required a PR, adding 15+ minutes to resolution</li>
+            <li>We had <strong>no status page</strong> to communicate the outage to internal users. We relied on Slack, which many people missed.</li>
+            <li>The template rendering failure was silent — no error, no warning, just empty output</li>
+          </ul>
+
+          <h2>Action Items</h2>
+          <table>
+            <tr><th>Action</th><th>Owner</th><th>Status</th></tr>
+            <tr><td>Add semantic validation to LB deployment (route count > 0)</td><td>@jpark</td><td style="color:var(--ghes-green);">✅ Done</td></tr>
+            <tr><td>Add one-click rollback to the LB admin tool</td><td>@jpark</td><td style="color:var(--ghes-green);">✅ Done</td></tr>
+            <tr><td>Enable Jinja2 strict mode to surface undefined variables</td><td>@jpark</td><td style="color:var(--ghes-green);">✅ Done</td></tr>
+            <tr><td><strong>Create an internal status page</strong></td><td>@msantiago</td><td style="color:var(--ghes-green);">✅ Done (this repo!)</td></tr>
+            <tr><td>Set up a deploy canary for LB config changes</td><td>@msantiago</td><td style="color:var(--ghes-yellow);">🔄 In progress</td></tr>
+            <tr><td>Add automatic rollback on health check failure</td><td>@jpark</td><td style="color:var(--ghes-text-muted);">⬜ Planned Q2</td></tr>
+          </table>
+
+          <h2>Lessons Learned</h2>
+          <ol>
+            <li><strong>Syntactic validation ≠ semantic validation.</strong> A config can be valid YAML and still be completely wrong. Always check invariants.</li>
+            <li><strong>Rollback must be fast and manual-friendly.</strong> If the automated path to rollback requires the same deployment pipeline that caused the problem, you're stuck.</li>
+            <li><strong>Have a status page.</strong> This outage was the direct catalyst for building the status dashboard. When everything is down, you need a way to tell people "yes, we know, we're working on it." (Marina started coding it during the incident.)</li>
+            <li><strong>Silent failures are the worst failures.</strong> Jinja2 rendering an undefined variable as empty with no error is a footgun. Strict mode should be the default.</li>
+          </ol>
+
+          <p style="margin-top:28px;font-style:italic;color:var(--ghes-text-muted);">
+            "Next time everything goes down, at least we'll have a nice-looking page that says so." — Marina, 15:50 UTC, while uploading the first commit to status-dash
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="ghes-footer">
+      <div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Security</a><a href="#">Status</a><a href="#">Docs</a></div>
+      <span class="ghes-version">GitHub Enterprise Server 3.13.2</span>
+    </footer>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

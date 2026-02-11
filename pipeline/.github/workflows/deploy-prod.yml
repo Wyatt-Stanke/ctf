@@ -22,7 +22,7 @@ on:
         required: false
         default: 'false'
         type: boolean
-  # Manual deployment available at /ops/dispatch.html
+  # Manual deployment available at /_ghes/dispatch.html
   # Repo: github.nimbusops.internal/NimbusOps/status-dash
 
 env:

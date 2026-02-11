@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Enterprise Server</title>
+    <link rel="stylesheet" href="ghes.css" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      /* ── Dashboard-specific styles ─────────────────────────────────── */
+      .dashboard-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 24px;
+      }
+      .dashboard-feed { min-width: 0; }
+      .dashboard-sidebar { min-width: 0; }
+
+      .dash-section-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ghes-text-muted);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Repository list */
+      .repo-list-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--ghes-border-subtle);
+      }
+      .repo-list-item:last-child { border-bottom: none; }
+      .repo-list-icon {
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+        margin-top: 3px;
+        color: var(--ghes-text-muted);
+      }
+      .repo-list-info { flex: 1; min-width: 0; }
+      .repo-list-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ghes-link);
+        text-decoration: none;
+      }
+      .repo-list-name:hover {
+        text-decoration: underline;
+        color: var(--ghes-link-hover);
+      }
+      .repo-list-desc {
+        font-size: 12px;
+        color: var(--ghes-text-muted);
+        margin-top: 4px;
+        line-height: 1.5;
+      }
+      .repo-list-meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--ghes-text-subtle);
+      }
+      .repo-list-meta span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .lang-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .lang-dot.js      { background: #f1e05a; }
+      .lang-dot.python   { background: #3572a5; }
+      .lang-dot.go       { background: #00add8; }
+      .lang-dot.html     { background: #e34c26; }
+      .lang-dot.shell    { background: #89e051; }
+      .visibility-badge {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--ghes-text-muted);
+        border: 1px solid var(--ghes-border);
+        border-radius: 12px;
+        padding: 0 8px;
+        line-height: 22px;
+        margin-left: 6px;
+      }
+      .repo-list-star {
+        flex-shrink: 0;
+        margin-left: auto;
+      }
+      .star-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 12px;
+        font-size: 12px;
+        color: var(--ghes-text);
+        background: var(--ghes-btn-bg);
+        border: 1px solid var(--ghes-btn-border);
+        border-radius: 6px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .star-btn:hover { background: var(--ghes-btn-hover); }
+
+      /* Activity feed */
+      .feed-card {
+        background: var(--ghes-surface);
+        border: 1px solid var(--ghes-border);
+        border-radius: 6px;
+        margin-bottom: 16px;
+        overflow: hidden;
+      }
+      .feed-card-header {
+        padding: 12px 16px;
+        font-size: 13px;
+        color: var(--ghes-text-muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid var(--ghes-border-subtle);
+      }
+      .feed-card-header .ghes-avatar {
+        width: 20px;
+        height: 20px;
+        font-size: 9px;
+      }
+      .feed-card-body {
+        padding: 12px 16px;
+        font-size: 13px;
+        color: var(--ghes-text);
+        line-height: 1.6;
+      }
+      .feed-card-body a {
+        font-weight: 600;
+      }
+      .feed-timestamp {
+        font-size: 12px;
+        color: var(--ghes-text-subtle);
+        margin-left: auto;
+      }
+
+      /* Sidebar cards */
+      .sidebar-card {
+        background: var(--ghes-surface);
+        border: 1px solid var(--ghes-border);
+        border-radius: 6px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      .sidebar-card-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ghes-text);
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--ghes-border-subtle);
+      }
+      .sidebar-repo-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 0;
+        font-size: 13px;
+        color: var(--ghes-text);
+        text-decoration: none;
+      }
+      .sidebar-repo-link:hover {
+        color: var(--ghes-link);
+        text-decoration: none;
+      }
+      .sidebar-repo-link .ghes-avatar {
+        width: 20px;
+        height: 20px;
+        font-size: 9px;
+        border-radius: 4px;
+      }
+      .announcement-banner {
+        background: rgba(56, 139, 253, 0.1);
+        border: 1px solid rgba(56, 139, 253, 0.4);
+        border-radius: 6px;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        font-size: 13px;
+        color: var(--ghes-text);
+        line-height: 1.5;
+      }
+      .announcement-banner strong {
+        color: var(--ghes-link);
+      }
+      .enterprise-version {
+        font-size: 12px;
+        color: var(--ghes-text-subtle);
+        text-align: center;
+        padding: 24px 0 12px;
+        border-top: 1px solid var(--ghes-border-subtle);
+        margin-top: 24px;
+      }
+
+      /* Filter input */
+      .dash-filter {
+        width: 100%;
+        padding: 5px 12px;
+        font-size: 13px;
+        color: var(--ghes-text);
+        background: transparent;
+        border: 1px solid var(--ghes-border);
+        border-radius: 6px;
+        outline: none;
+        margin-bottom: 8px;
+      }
+      .dash-filter::placeholder { color: var(--ghes-text-subtle); }
+      .dash-filter:focus {
+        border-color: var(--ghes-link);
+        box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── GHES Header ──────────────────────────────────────────────── -->
+    <header class="ghes-header">
+      <div class="ghes-header-inner">
+        <a class="ghes-logo" href="index.html">
+          <svg height="32" viewBox="0 0 16 16" width="32">
+            <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
+          </svg>
+          <span class="ghes-enterprise-badge">Enterprise</span>
+        </a>
+
+        <nav style="display:flex;gap:16px;font-size:14px;font-weight:600;">
+          <a href="#" style="color:var(--ghes-text);text-decoration:none;">Pull requests</a>
+          <a href="#" style="color:var(--ghes-text);text-decoration:none;">Issues</a>
+          <a href="#" style="color:var(--ghes-text);text-decoration:none;">Explore</a>
+        </nav>
+
+        <div class="ghes-header-search">
+          <input type="text" placeholder="Search or jump to…" />
+        </div>
+
+        <div class="ghes-header-right">
+          <span class="ghes-header-icon">
+            <i data-lucide="plus" width="16" height="16"></i>
+          </span>
+          <span class="ghes-header-icon">
+            <i data-lucide="bell" width="16" height="16"></i>
+            <span class="ghes-notification-dot"></span>
+          </span>
+          <div class="ghes-avatar-dropdown">
+            <div class="ghes-avatar">MS</div>
+            <i data-lucide="chevron-down" width="12" height="12"></i>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Dashboard content ────────────────────────────────────────── -->
+    <div class="page-body">
+      <div class="announcement-banner">
+        <strong>Maintenance window scheduled:</strong> GHES 3.12 upgrade planned for
+        Feb 15 02:00–04:00 UTC. Expect intermittent availability. See
+        <a href="#">#ops-announcements</a> for details.
+      </div>
+
+      <div class="dashboard-layout">
+        <!-- ── Feed column ──────────────────────────────────── -->
+        <div class="dashboard-feed">
+          <div class="dash-section-title">
+            <i data-lucide="home" width="16" height="16"></i>
+            Home
+          </div>
+
+          <!-- Feed cards -->
+          <div class="feed-card">
+            <div class="feed-card-header">
+              <div class="ghes-avatar">MS</div>
+              <span><strong style="color:var(--ghes-text)">msantiago</strong> pushed to <a href="repo.html">NimbusOps/status-dash</a></span>
+              <span class="feed-timestamp">2 hours ago</span>
+            </div>
+            <div class="feed-card-body">
+              <code style="font-size:12px;background:var(--ghes-btn-bg);padding:2px 6px;border-radius:4px;">e7a3f91</code>
+              update status polling interval
+            </div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-header">
+              <div class="ghes-avatar" style="background:linear-gradient(135deg,#238636,#3fb950)">JK</div>
+              <span><strong style="color:var(--ghes-text)">jkim</strong> opened a pull request in <a href="repo.html">NimbusOps/infra-charts</a></span>
+              <span class="feed-timestamp">5 hours ago</span>
+            </div>
+            <div class="feed-card-body">
+              <a href="#">#47 — Bump ingress-nginx to 4.10.1</a><br />
+              <span style="color:var(--ghes-text-muted);font-size:12px;">Updates the ingress controller chart to address CVE-2024-XXXX.</span>
+            </div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-header">
+              <div class="ghes-avatar" style="background:linear-gradient(135deg,#b62324,#f85149)">DP</div>
+              <span><strong style="color:var(--ghes-text)">dpatel</strong> commented on <a href="#">NimbusOps/auth-proxy#132</a></span>
+              <span class="feed-timestamp">yesterday</span>
+            </div>
+            <div class="feed-card-body">
+              <span style="color:var(--ghes-text-muted);">"Looks good — just double-check the OIDC callback URL matches the staging env before merging."</span>
+            </div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-header">
+              <div class="ghes-avatar">MS</div>
+              <span><strong style="color:var(--ghes-text)">msantiago</strong> created a release in <a href="repo.html">NimbusOps/status-dash</a></span>
+              <span class="feed-timestamp">3 days ago</span>
+            </div>
+            <div class="feed-card-body">
+              <a href="#">v2.4.0</a> — Adds incident history timeline and improved polling resilience.
+            </div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-header">
+              <div class="ghes-avatar" style="background:linear-gradient(135deg,#1f6feb,#58a6ff)">TL</div>
+              <span><strong style="color:var(--ghes-text)">tlin</strong> merged a pull request in <a href="#">NimbusOps/deploy-tools</a></span>
+              <span class="feed-timestamp">4 days ago</span>
+            </div>
+            <div class="feed-card-body">
+              <a href="#">#89 — Migrate registry auth to OIDC tokens</a>
+              <span style="display:inline-block;font-size:11px;background:var(--ghes-purple);color:#fff;padding:1px 8px;border-radius:12px;margin-left:6px;">merged</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sidebar column ───────────────────────────────── -->
+        <div class="dashboard-sidebar">
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">Your repositories</div>
+            <input class="dash-filter" type="text" placeholder="Find a repository…" />
+            <a class="sidebar-repo-link" href="repo.html">
+              <div class="ghes-avatar" style="border-radius:4px;background:linear-gradient(135deg,#6e40c9,#a371f7)">NO</div>
+              NimbusOps/status-dash
+            </a>
+            <a class="sidebar-repo-link" href="#">
+              <div class="ghes-avatar" style="border-radius:4px;background:linear-gradient(135deg,#238636,#3fb950)">NO</div>
+              NimbusOps/infra-charts
+            </a>
+            <a class="sidebar-repo-link" href="#">
+              <div class="ghes-avatar" style="border-radius:4px;background:linear-gradient(135deg,#b62324,#f85149)">NO</div>
+              NimbusOps/auth-proxy
+            </a>
+            <a class="sidebar-repo-link" href="#">
+              <div class="ghes-avatar" style="border-radius:4px;background:linear-gradient(135deg,#1f6feb,#58a6ff)">NO</div>
+              NimbusOps/deploy-tools
+            </a>
+            <a class="sidebar-repo-link" href="#">
+              <div class="ghes-avatar" style="border-radius:4px;background:linear-gradient(135deg,#d29922,#e3b341)">NO</div>
+              NimbusOps/monitoring-agent
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">Recent activity</div>
+            <div style="font-size:13px;color:var(--ghes-text-muted);line-height:1.8;">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <i data-lucide="git-commit" width="14" height="14" style="color:var(--ghes-green);flex-shrink:0;"></i>
+                <span><a href="repo.html" style="font-weight:600;">status-dash</a> deploy succeeded</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <i data-lucide="git-pull-request" width="14" height="14" style="color:var(--ghes-purple);flex-shrink:0;"></i>
+                <span><a href="#">infra-charts#47</a> awaiting review</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <i data-lucide="alert-circle" width="14" height="14" style="color:var(--ghes-yellow);flex-shrink:0;"></i>
+                <span><a href="#">auth-proxy#132</a> has conflicts</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <i data-lucide="check-circle" width="14" height="14" style="color:var(--ghes-green);flex-shrink:0;"></i>
+                <span><a href="#">deploy-tools#89</a> merged</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">Explore repositories</div>
+            <div style="font-size:13px;color:var(--ghes-text-muted);line-height:2;">
+              <a href="#" style="display:block;">PlatformEng/k8s-operator</a>
+              <a href="#" style="display:block;">PlatformEng/terraform-modules</a>
+              <a href="#" style="display:block;">SecurityTeam/vuln-scanner</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="enterprise-version">
+        GitHub Enterprise Server 3.11.4 · <a href="#" style="color:var(--ghes-text-subtle);">Release notes</a> · <a href="#" style="color:var(--ghes-text-subtle);">Admin center</a>
+      </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

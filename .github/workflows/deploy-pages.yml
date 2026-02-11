@@ -33,8 +33,7 @@ jobs:
             --directory "dist" \
             -cvf "$RUNNER_TEMP/artifact.tar" \
             --exclude=.git \
-            --exclude=.github \
-            .
+            . 
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

@@ -32,7 +32,6 @@ jobs:
             --dereference --hard-dereference \
             --directory "dist" \
             -cvf "$RUNNER_TEMP/artifact.tar" \
-            --exclude=.git \
             . 
 
       - name: Upload artifact

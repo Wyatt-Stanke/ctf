@@ -183,7 +183,9 @@
         padding: 20px 28px;
         margin-bottom: 40px;
         text-decoration: none;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
       }
 
       .target-link:hover {
@@ -255,7 +257,9 @@
         border-radius: 4px;
         padding: 3px 10px;
         cursor: pointer;
-        transition: background 0.15s, color 0.15s;
+        transition:
+          background 0.15s,
+          color 0.15s;
         flex-shrink: 0;
         margin-left: 16px;
       }
@@ -268,7 +272,9 @@
       .hint-body {
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.35s ease, padding 0.35s ease;
+        transition:
+          max-height 0.35s ease,
+          padding 0.35s ease;
       }
 
       .hint-body.revealed {
@@ -403,30 +409,65 @@
       }
 
       @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        20%, 60% { transform: translateX(-4px); }
-        40%, 80% { transform: translateX(4px); }
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20%,
+        60% {
+          transform: translateX(-4px);
+        }
+        40%,
+        80% {
+          transform: translateX(4px);
+        }
       }
-      .shake { animation: shake 0.3s ease; }
+      .shake {
+        animation: shake 0.3s ease;
+      }
 
       @keyframes celebrate-glow {
-        0% { box-shadow: 0 0 0px transparent; }
-        30% { box-shadow: 0 0 30px #22c55e55, 0 0 60px #22c55e22; }
-        100% { box-shadow: 0 0 20px #22c55e22; }
+        0% {
+          box-shadow: 0 0 0px transparent;
+        }
+        30% {
+          box-shadow:
+            0 0 30px #22c55e55,
+            0 0 60px #22c55e22;
+        }
+        100% {
+          box-shadow: 0 0 20px #22c55e22;
+        }
       }
 
       @keyframes flag-pop {
-        0% { transform: scale(0.8); opacity: 0; }
-        50% { transform: scale(1.15); }
-        100% { transform: scale(1); opacity: 1; }
+        0% {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.15);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
       }
 
-      .celebrate { animation: celebrate-glow 0.8s ease forwards; }
-      .flag-pop { animation: flag-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+      .celebrate {
+        animation: celebrate-glow 0.8s ease forwards;
+      }
+      .flag-pop {
+        animation: flag-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      }
 
       @media (max-width: 600px) {
-        .flag-form { flex-direction: column; }
-        .flag-input { width: 100%; }
+        .flag-form {
+          flex-direction: column;
+        }
+        .flag-input {
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -434,25 +475,40 @@
     <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
 
     <div class="container">
-      <a class="back-link" href="/">
-        <svg viewBox="0 0 16 16"><path d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/></svg>
+      <a class="back-link" href="../">
+        <svg viewBox="0 0 16 16">
+          <path
+            d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"
+          />
+        </svg>
         All challenges
       </a>
 
       <div class="status-bar">
-        <span class="difficulty" style="color:{{DIFF_COLOR}};background:{{DIFF_COLOR}}22">{{DIFFICULTY}}</span>
+        <span
+          class="difficulty"
+          style="color:{{DIFF_COLOR}};background:{{DIFF_COLOR}}22"
+          >{{DIFFICULTY}}</span
+        >
         <span class="status-badge unsolved" id="statusBadge">Not solved</span>
       </div>
 
       <h1>{{TITLE}}</h1>
 
-{{BODY}}
+      {{BODY}}
 
       <!-- Flag submission -->
       <div class="flag-section" id="flagSection">
         <div class="flag-section-title">Submit Flag</div>
-        <form class="flag-form" onsubmit="return _checkFlag(event)">
-          <input type="text" class="flag-input" id="flagInput" placeholder="flag{...}" autocomplete="off" spellcheck="false" />
+        <form class="flag-form" onsubmit="return _checkFlag(event);">
+          <input
+            type="text"
+            class="flag-input"
+            id="flagInput"
+            placeholder="flag{...}"
+            autocomplete="off"
+            spellcheck="false"
+          />
           <button type="submit" class="flag-btn">Submit</button>
         </form>
         <div class="flag-result" id="flagResult"></div>
@@ -465,8 +521,11 @@
 
       /* ── localStorage helpers (shared format with homepage) ── */
       function _getSolved() {
-        try { return JSON.parse(localStorage.getItem("ctf_solved") || "{}"); }
-        catch { return {}; }
+        try {
+          return JSON.parse(localStorage.getItem("ctf_solved") || "{}");
+        } catch {
+          return {};
+        }
       }
 
       function _setSolved(slug) {
@@ -486,7 +545,8 @@
           const result = document.getElementById("flagResult");
           if (result && !result.textContent) {
             result.className = "flag-result correct";
-            result.innerHTML = '<span class="solved-badge flag-pop">\u2713 Solved</span>';
+            result.innerHTML =
+              '<span class="solved-badge flag-pop">\u2713 Solved</span>';
           }
         }
       }
@@ -495,7 +555,9 @@
       async function _sha256(str) {
         const buf = new TextEncoder().encode(str);
         const hash = await crypto.subtle.digest("SHA-256", buf);
-        return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+        return Array.from(new Uint8Array(hash))
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
       }
 
       /* ── Confetti engine ── */
@@ -512,14 +574,23 @@
         window.addEventListener("resize", resize);
         resize();
 
-        const COLORS = ["#22c55e", "#e05a33", "#fbbf24", "#a855f7", "#3b82f6", "#ec4899", "#f0f2f6"];
+        const COLORS = [
+          "#22c55e",
+          "#e05a33",
+          "#fbbf24",
+          "#a855f7",
+          "#3b82f6",
+          "#ec4899",
+          "#f0f2f6",
+        ];
 
         function spawn(x, y, count) {
           for (let i = 0; i < count; i++) {
             const angle = Math.random() * Math.PI * 2;
             const speed = 4 + Math.random() * 8;
             particles.push({
-              x, y,
+              x,
+              y,
               vx: Math.cos(angle) * speed,
               vy: Math.sin(angle) * speed - 4,
               size: 4 + Math.random() * 6,
@@ -531,7 +602,10 @@
               shape: Math.random() > 0.5 ? "rect" : "circle",
             });
           }
-          if (!running) { running = true; loop(); }
+          if (!running) {
+            running = true;
+            loop();
+          }
         }
 
         function loop() {
@@ -544,7 +618,10 @@
             p.vx *= 0.99;
             p.rotation += p.rotSpeed;
             p.life -= p.decay;
-            if (p.life <= 0) { particles.splice(i, 1); continue; }
+            if (p.life <= 0) {
+              particles.splice(i, 1);
+              continue;
+            }
 
             ctx.save();
             ctx.translate(p.x, p.y);
@@ -567,14 +644,16 @@
           }
         }
 
-        return { burst(el) {
-          const rect = el.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top + rect.height / 2;
-          spawn(cx, cy, 60);
-          setTimeout(() => spawn(cx - 60, cy - 20, 30), 100);
-          setTimeout(() => spawn(cx + 60, cy - 20, 30), 200);
-        }};
+        return {
+          burst(el) {
+            const rect = el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            spawn(cx, cy, 60);
+            setTimeout(() => spawn(cx - 60, cy - 20, 30), 100);
+            setTimeout(() => spawn(cx + 60, cy - 20, 30), 200);
+          },
+        };
       })();
 
       /* ── Flag checking ── */
@@ -597,7 +676,8 @@
         if (hash === FLAG_HASH) {
           const section = document.getElementById("flagSection");
           resultEl.className = "flag-result correct";
-          resultEl.innerHTML = '<span class="solved-badge flag-pop">\u2713 Correct!</span>';
+          resultEl.innerHTML =
+            '<span class="solved-badge flag-pop">\u2713 Correct!</span>';
 
           if (section) {
             section.classList.add("celebrate");

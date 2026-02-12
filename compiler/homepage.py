@@ -77,7 +77,7 @@ def generate_homepage(challenges: list[Path], dest: Path) -> None:
           </div>
           <p class="card-summary">{summary}</p>
           <div class="card-footer">
-            <a class="card-link" href="./{slug}/" target="_blank">Open challenge &rarr;</a>
+            <a class="card-link" href="./{slug}/challenge/" target="_blank">Open challenge &rarr;</a>
             <form class="flag-form" data-slug="{slug}" onsubmit="return _checkFlag(event)">
               <input type="text" class="flag-input" placeholder="flag{{...}}" autocomplete="off" spellcheck="false" />
               <button type="submit" class="flag-btn">Submit</button>

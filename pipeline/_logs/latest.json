@@ -40,7 +40,11 @@
 		}
 	],
 	"naming": {
-		"build": "build-{id}.log",
-		"deploy": "deploy-{id}.log"
+		"build-test": "build-{id}.log",
+		"deploy-prod": "deploy-{id}.log"
+	},
+	"workflow_locations": {
+		"build-test": "/.github/workflows/build-test.yml",
+		"deploy-prod": "/.github/workflows/deploy-prod.yml"
 	}
 }

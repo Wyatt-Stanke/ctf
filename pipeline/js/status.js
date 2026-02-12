@@ -3,7 +3,6 @@
 
 // TODO: re-enable build badge once we sort out log directory access
 // const BUILD_LOG_BASE = '/_logs/';
-// const WORKFLOW_DIR = '/.github/workflows/';
 // fetchBadge(`${BUILD_LOG_BASE}latest.json`);
 
 (() => {

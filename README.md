@@ -3,3 +3,15 @@
 
 # ctf
 CTF challenges for dad
+
+## For AI Agents
+
+Each challenge directory stores `*.instructions.md` files under
+`.github/instructions/<challenge>/<name>/` with an `applyTo` frontmatter block.
+**Always read the instructions files for the challenge before making any
+changes.** These files document the challenge design, solution path, file
+structure, and cross-references. Update them after every edit.
+
+| Challenge            | Instructions                                                                      |
+| -------------------- | --------------------------------------------------------------------------------- |
+| `nimbusops/pipeline` | [pipeline.instructions.md](.github/instructions/nimbusops/pipeline/pipeline.instructions.md) |

@@ -36,6 +36,7 @@ KNOWN_DIRECTIVES = {
     "json_minify",
     "no_include",
     "base64_bundle",
+    "challenge_page",
 }
 
 
@@ -262,6 +263,74 @@ def apply_base64_bundle(file_path: Path) -> str:
     return rest + f'eval(atob("{encoded}"));\n'
 
 
+# ---------------------------------------------------------------------------
+# challenge_page
+# ---------------------------------------------------------------------------
+
+_CHALLENGE_TEMPLATE_PATH = Path(__file__).with_name("challenge.html")
+
+_DIFFICULTY_COLORS = {
+    "easy": "#22c55e",
+    "medium": "#e05a33",
+    "hard": "#ef4444",
+    "insane": "#a855f7",
+}
+
+
+def apply_challenge_page(file_path: Path) -> str:
+    """Wrap challenge body content in the shared challenge page template.
+
+    The source file should start with ``<!-- COMPILER: challenge_page -->``
+    followed by the challenge-specific HTML body content (briefing, notes,
+    hints, etc.).  The template provides the full page shell including
+    back button, status badge, flag submission form, and confetti.
+
+    Metadata is read from ``.challenge.json`` in the challenge root
+    (expected at ``file_path.parent.parent``).
+    """
+    with open(file_path, "r", encoding="utf-8") as fh:
+        first_line = fh.readline()
+        body = fh.read().strip()
+
+    # Find .challenge.json — challenge root is parent of challenge/
+    challenge_root = file_path.parent.parent
+    meta_file = challenge_root / ".challenge.json"
+    meta: dict = {}
+    if meta_file.exists():
+        try:
+            meta = json.loads(meta_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    slug = challenge_root.name
+    title = meta.get("title", slug.replace("-", " ").replace("_", " ").title())
+    difficulty = meta.get("difficulty", "Unknown")
+    diff_color = _DIFFICULTY_COLORS.get(difficulty.lower(), "#6b7280")
+    flag_hash = meta.get("flag_hash", "")
+
+    template = _CHALLENGE_TEMPLATE_PATH.read_text(encoding="utf-8")
+
+    return (
+        template
+        .replace("{{TITLE}}", _html_escape(title))
+        .replace("{{DIFFICULTY}}", _html_escape(difficulty))
+        .replace("{{DIFF_COLOR}}", diff_color)
+        .replace("{{SLUG}}", _html_escape(slug))
+        .replace("{{FLAG_HASH}}", flag_hash)
+        .replace("{{BODY}}", body)
+    )
+
+
+def _html_escape(text: str) -> str:
+    """Minimal HTML/JS-safe escaping."""
+    return (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+    )
+
+
 def apply_directive(
     file_path: Path,
     directive: str,
@@ -276,6 +345,8 @@ def apply_directive(
         return apply_json_minify(file_path)
     if directive == "base64_bundle":
         return apply_base64_bundle(file_path)
+    if directive == "challenge_page":
+        return apply_challenge_page(file_path)
     if directive == "no_include":
         # Should be handled by the caller (builder / server) — never applied.
         raise ValueError("no_include files should be skipped, not applied")

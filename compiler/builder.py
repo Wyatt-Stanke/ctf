@@ -20,7 +20,7 @@ _HIDDEN_MD_RE = re.compile(r"^\..+\.md$", re.IGNORECASE)
 
 # Metadata files used by the compiler (e.g. .challenge.json) are also
 # excluded from build output.
-_META_FILES = {".challenge.json"}
+_META_FILES = {".challenge.json", ".group.json"}
 
 
 def compile_site(source: Path, dest: Path) -> None:

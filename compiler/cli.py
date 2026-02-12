@@ -54,6 +54,7 @@ def _cmd_compile(args: argparse.Namespace) -> None:
 
 def _cmd_compile_all(args: argparse.Namespace) -> None:
     from compiler.builder import compile_site
+    from compiler.homepage import generate_homepage
 
     root = Path(".").resolve()
     out_root = Path(args.output).resolve()
@@ -70,6 +71,10 @@ def _cmd_compile_all(args: argparse.Namespace) -> None:
         dest = out_root / source.name
         print(f"\nCompiling {source.name}/ -> {dest}")
         compile_site(source, dest)
+
+    # Generate the root homepage listing all challenges
+    print("\nGenerating homepage...")
+    generate_homepage(challenges, out_root)
 
     print("\nAll done.")
 

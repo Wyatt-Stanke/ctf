@@ -18,6 +18,10 @@ from compiler.directives import apply_directive, detect_directive
 # as developer/author documentation.
 _HIDDEN_MD_RE = re.compile(r"^\..+\.md$", re.IGNORECASE)
 
+# Metadata files used by the compiler (e.g. .challenge.json) are also
+# excluded from build output.
+_META_FILES = {".challenge.json"}
+
 
 def compile_site(source: Path, dest: Path) -> None:
     """Build the static site from *source* into *dest*.
@@ -43,6 +47,11 @@ def compile_site(source: Path, dest: Path) -> None:
         # Skip hidden markdown files (.*.md) — author-only documentation
         if _HIDDEN_MD_RE.match(src_file.name):
             print(f"  skip   {rel}  (hidden markdown)")
+            continue
+
+        # Skip compiler metadata files (.challenge.json, etc.)
+        if src_file.name in _META_FILES:
+            print(f"  skip   {rel}  (metadata)")
             continue
 
         dst_file.parent.mkdir(parents=True, exist_ok=True)

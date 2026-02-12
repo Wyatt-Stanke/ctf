@@ -1,0 +1,6 @@
+{
+    "title": "Pipeline",
+    "difficulty": "Medium",
+    "summary": "NimbusOps built a status page during an outage and deployed it with GitHub Actions. The pipeline uses secrets for their container registr. Find the deploy key.",
+    "flag_hash": "f026394fb297674616ec30dc91ab3bc095981a1eccbefcd81d4eede1bdc02c1e"
+}

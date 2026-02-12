@@ -10,40 +10,10 @@
       rel="stylesheet"
     />
     <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+      /* ── Shared base ── */
+      {{SHARED_CSS}}
 
-      :root {
-        --bg: #0c0e13;
-        --surface: #13161d;
-        --surface-2: #1a1e27;
-        --border: #2a2f3a;
-        --text: #c8cdd8;
-        --text-dim: #6b7280;
-        --accent: #e05a33;
-        --accent-glow: #e05a3344;
-        --green: #22c55e;
-        --red: #ef4444;
-        --yellow: #fbbf24;
-      }
-
-      body {
-        font-family: "Source Serif 4", Georgia, serif;
-        background: var(--bg);
-        color: var(--text);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        padding: 60px 20px;
-        line-height: 1.7;
-        overflow-x: hidden;
-      }
-
+      /* ── Homepage-specific styles ── */
       .container {
         max-width: 720px;
         width: 100%;
@@ -65,15 +35,6 @@
         padding: 4px 12px;
         border-radius: 3px;
         margin-bottom: 12px;
-      }
-
-      h1 {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 28px;
-        font-weight: 700;
-        color: #f0f2f6;
-        margin-bottom: 8px;
-        line-height: 1.3;
       }
 
       .subtitle {
@@ -114,7 +75,7 @@
         white-space: nowrap;
       }
 
-      /* ── Groups ── */
+      /* Groups */
       .group {
         margin-bottom: 32px;
       }
@@ -207,7 +168,7 @@
         display: none;
       }
 
-      /* ── Challenge cards ── */
+      /* Challenge cards */
       .challenge-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -235,13 +196,6 @@
       }
 
       .difficulty {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 3px 10px;
-        border-radius: 3px;
         flex-shrink: 0;
       }
 
@@ -285,74 +239,25 @@
         opacity: 0.8;
       }
 
-      .flag-form {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-      }
-
+      /* Flag form (homepage compact sizing) */
       .flag-input {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 13px;
-        background: var(--surface-2);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        color: var(--text);
         padding: 7px 12px;
         width: 200px;
-        outline: none;
-        transition: border-color 0.15s;
-      }
-
-      .flag-input:focus {
-        border-color: var(--accent);
       }
 
       .flag-btn {
-        font-family: "JetBrains Mono", monospace;
         font-size: 12px;
-        font-weight: 700;
-        color: #f0f2f6;
-        background: var(--accent);
-        border: none;
-        border-radius: 4px;
         padding: 8px 16px;
-        cursor: pointer;
-        transition: opacity 0.15s;
-      }
-
-      .flag-btn:hover {
-        opacity: 0.85;
       }
 
       .flag-result {
-        font-family: "JetBrains Mono", monospace;
         font-size: 12px;
         min-height: 18px;
         width: 100%;
         margin-top: 4px;
       }
 
-      .flag-result.correct {
-        color: var(--green);
-      }
-      .flag-result.incorrect {
-        color: var(--red);
-      }
-
-      .solved-badge {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        color: var(--green);
-        background: #22c55e22;
-        padding: 3px 10px;
-        border-radius: 3px;
-      }
-
-      /* ── Reset button ── */
+      /* Reset button */
       .reset-section {
         margin-top: 40px;
         display: flex;
@@ -378,7 +283,7 @@
         border-color: var(--red);
       }
 
-      /* ── Confirm dialog overlay ── */
+      /* Confirm dialog overlay */
       .confirm-overlay {
         display: none;
         position: fixed;
@@ -449,36 +354,6 @@
         background: var(--red);
       }
 
-      /* ── Confetti & celebration animation ── */
-      .confetti-canvas {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 999;
-      }
-
-      @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        20%, 60% { transform: translateX(-4px); }
-        40%, 80% { transform: translateX(4px); }
-      }
-      .shake { animation: shake 0.3s ease; }
-
-      @keyframes celebrate-glow {
-        0% { box-shadow: 0 0 0px transparent; }
-        30% { box-shadow: 0 0 30px #22c55e55, 0 0 60px #22c55e22; }
-        100% { box-shadow: 0 0 20px #22c55e22; }
-      }
-
-      @keyframes flag-pop {
-        0% { transform: scale(0.8); opacity: 0; }
-        50% { transform: scale(1.15); }
-        100% { transform: scale(1); opacity: 1; }
-      }
-
-      .celebrate { animation: celebrate-glow 0.8s ease forwards; }
-      .flag-pop { animation: flag-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-
       @media (max-width: 600px) {
         .card-footer { flex-direction: column; align-items: flex-start; }
         .flag-input { width: 100%; }
@@ -529,6 +404,10 @@
     </div>
 
     <script>
+      /* ── Shared helpers ── */
+      {{SHARED_JS}}
+
+      /* ── Homepage-specific logic ── */
       const FLAG_HASHES = {
 {{HASHES}}
       };
@@ -539,23 +418,10 @@
 
       const TOTAL = Object.keys(FLAG_HASHES).length;
 
-      /* ── localStorage helpers ── */
-      function _getSolved() {
-        try { return JSON.parse(localStorage.getItem("ctf_solved") || "{}"); }
-        catch { return {}; }
-      }
-
-      function _setSolved(slug) {
-        const s = _getSolved();
-        s[slug] = true;
-        localStorage.setItem("ctf_solved", JSON.stringify(s));
-      }
-
-      /* ── Group collapse ── */
+      /* Group collapse */
       function _toggleGroup(header) {
         const group = header.closest(".group");
         group.classList.toggle("collapsed");
-        // Persist collapse state
         _saveCollapseState();
       }
 
@@ -579,7 +445,7 @@
         } catch {}
       }
 
-      /* ── Progress ── */
+      /* Progress */
       function _updateProgress() {
         const solved = _getSolved();
         const count = Object.keys(FLAG_HASHES).filter(k => solved[k]).length;
@@ -615,93 +481,7 @@
         }
       }
 
-      /* ── SHA-256 ── */
-      async function _sha256(str) {
-        const buf = new TextEncoder().encode(str);
-        const hash = await crypto.subtle.digest("SHA-256", buf);
-        return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-      }
-
-      /* ── Confetti engine ── */
-      const _confetti = (() => {
-        const canvas = document.getElementById("confettiCanvas");
-        const ctx = canvas.getContext("2d");
-        let particles = [];
-        let running = false;
-
-        function resize() {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        }
-        window.addEventListener("resize", resize);
-        resize();
-
-        const COLORS = ["#22c55e", "#e05a33", "#fbbf24", "#a855f7", "#3b82f6", "#ec4899", "#f0f2f6"];
-
-        function spawn(x, y, count) {
-          for (let i = 0; i < count; i++) {
-            const angle = Math.random() * Math.PI * 2;
-            const speed = 4 + Math.random() * 8;
-            particles.push({
-              x, y,
-              vx: Math.cos(angle) * speed,
-              vy: Math.sin(angle) * speed - 4,
-              size: 4 + Math.random() * 6,
-              color: COLORS[Math.floor(Math.random() * COLORS.length)],
-              rotation: Math.random() * 360,
-              rotSpeed: (Math.random() - 0.5) * 12,
-              life: 1,
-              decay: 0.008 + Math.random() * 0.012,
-              shape: Math.random() > 0.5 ? "rect" : "circle",
-            });
-          }
-          if (!running) { running = true; loop(); }
-        }
-
-        function loop() {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vy += 0.18;
-            p.vx *= 0.99;
-            p.rotation += p.rotSpeed;
-            p.life -= p.decay;
-            if (p.life <= 0) { particles.splice(i, 1); continue; }
-
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate((p.rotation * Math.PI) / 180);
-            ctx.globalAlpha = p.life;
-            ctx.fillStyle = p.color;
-            if (p.shape === "rect") {
-              ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
-            } else {
-              ctx.beginPath();
-              ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-              ctx.fill();
-            }
-            ctx.restore();
-          }
-          if (particles.length > 0) {
-            requestAnimationFrame(loop);
-          } else {
-            running = false;
-          }
-        }
-
-        return { burst(el) {
-          const rect = el.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top + rect.height / 2;
-          spawn(cx, cy, 60);
-          setTimeout(() => spawn(cx - 60, cy - 20, 30), 100);
-          setTimeout(() => spawn(cx + 60, cy - 20, 30), 200);
-        }};
-      })();
-
-      /* ── Flag checking ── */
+      /* Flag checking */
       async function _checkFlag(e) {
         e.preventDefault();
         const form = e.target;
@@ -745,7 +525,7 @@
         return false;
       }
 
-      /* ── Reset dialog ── */
+      /* Reset dialog */
       function _showReset() {
         document.getElementById("resetOverlay").classList.add("visible");
       }

@@ -17,6 +17,8 @@ import json
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from compiler.assets import apply_shared_placeholders
+
 if TYPE_CHECKING:
     from compiler.cli import ChallengeGroup
 
@@ -148,6 +150,7 @@ def generate_homepage(groups: list[ChallengeGroup], dest: Path) -> None:
         .replace("{{COUNT}}", str(total_challenges))
         .replace("{{GROUP_MAP}}", group_map_js)
     )
+    html = apply_shared_placeholders(html)
 
     dest.mkdir(parents=True, exist_ok=True)
     (dest / "index.html").write_text(html, encoding="utf-8")

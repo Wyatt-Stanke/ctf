@@ -20,6 +20,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
+from compiler.assets import apply_shared_placeholders
+
 # Hidden markdown files (e.g. .foo.md) are excluded from directory listings.
 _HIDDEN_MD_RE = re.compile(r"^\..+\.md$", re.IGNORECASE)
 
@@ -310,7 +312,7 @@ def apply_challenge_page(file_path: Path) -> str:
 
     template = _CHALLENGE_TEMPLATE_PATH.read_text(encoding="utf-8")
 
-    return (
+    html = (
         template
         .replace("{{TITLE}}", _html_escape(title))
         .replace("{{DIFFICULTY}}", _html_escape(difficulty))
@@ -319,6 +321,8 @@ def apply_challenge_page(file_path: Path) -> str:
         .replace("{{FLAG_HASH}}", flag_hash)
         .replace("{{BODY}}", body)
     )
+
+    return apply_shared_placeholders(html)
 
 
 def _html_escape(text: str) -> str:

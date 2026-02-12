@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NimbusOps Container Registry</title>
+    <link rel="stylesheet" href="registry.css" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <!-- ── Header ───────────────────────────────────────────────────── -->
+    <header class="reg-header">
+      <a class="reg-logo" href="index.html">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#4f8ff7" stroke-width="2" />
+          <circle cx="10" cy="12" r="3" fill="#4f8ff7" opacity="0.6" />
+          <circle cx="17" cy="11" r="4" fill="#4f8ff7" opacity="0.8" />
+          <circle cx="14" cy="16" r="3.5" fill="#4f8ff7" />
+        </svg>
+        <span>Registry</span>
+      </a>
+      <span class="reg-logo-divider"></span>
+
+      <nav class="reg-header-nav">
+        <a href="index.html" class="active">Repositories</a>
+        <a href="#">Helm Charts</a>
+        <a href="#">Garbage Collection</a>
+        <a href="#">Administration</a>
+      </nav>
+
+      <div class="reg-header-search">
+        <input type="text" placeholder="Search repositories…" />
+      </div>
+
+      <div class="reg-header-right">
+        <div class="reg-avatar">MS</div>
+      </div>
+    </header>
+
+    <!-- ── Main layout ──────────────────────────────────────────────── -->
+    <div class="reg-layout">
+      <!-- Sidebar -->
+      <aside class="reg-sidebar">
+        <div class="reg-sidebar-title">Projects</div>
+        <div class="reg-sidebar-section">
+          <a href="index.html" class="active">
+            <span class="reg-sidebar-icon">📦</span>
+            nimbusops
+          </a>
+          <a href="#">
+            <span class="reg-sidebar-icon">📦</span>
+            platform-eng
+          </a>
+          <a href="#">
+            <span class="reg-sidebar-icon">📦</span>
+            security-team
+          </a>
+        </div>
+
+        <div class="reg-sidebar-title">System</div>
+        <div class="reg-sidebar-section">
+          <a href="#">
+            <span class="reg-sidebar-icon">📊</span>
+            Dashboard
+          </a>
+          <a href="#">
+            <span class="reg-sidebar-icon">👥</span>
+            Users
+          </a>
+          <a href="#">
+            <span class="reg-sidebar-icon">🔑</span>
+            Robot Accounts
+          </a>
+          <a href="#">
+            <span class="reg-sidebar-icon">📋</span>
+            Audit Logs
+          </a>
+          <a href="#">
+            <span class="reg-sidebar-icon">⚙️</span>
+            Configuration
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="reg-main">
+        <div class="reg-alert">
+          <span class="reg-alert-icon">⚠</span>
+          <span>
+            <strong>OIDC migration in progress:</strong> Robot accounts will be deprecated in favor of OIDC-issued short-lived tokens.
+            See <a href="#">RFC-2026-003</a> for migration timeline. Current deploy keys remain active during transition.
+          </span>
+        </div>
+
+        <div class="reg-page-title">
+          <div>
+            <h1>nimbusops</h1>
+            <div class="reg-subtitle">8 repositories &middot; Internal project</div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="reg-stats-row">
+          <div class="reg-stat-card">
+            <div class="reg-stat-value">8</div>
+            <div class="reg-stat-label">Repositories</div>
+          </div>
+          <div class="reg-stat-card">
+            <div class="reg-stat-value">47</div>
+            <div class="reg-stat-label">Image Tags</div>
+          </div>
+          <div class="reg-stat-card">
+            <div class="reg-stat-value">3.2 GB</div>
+            <div class="reg-stat-label">Total Storage</div>
+          </div>
+          <div class="reg-stat-card">
+            <div class="reg-stat-value">1,284</div>
+            <div class="reg-stat-label">Pulls (30d)</div>
+          </div>
+        </div>
+
+        <!-- Repository table -->
+        <div class="reg-table-header">
+          <h2>Repositories</h2>
+          <input class="reg-table-filter" type="text" placeholder="Filter repositories…" />
+        </div>
+
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Repository</th>
+              <th>Visibility</th>
+              <th>Tags</th>
+              <th>Size</th>
+              <th>Pulls</th>
+              <th>Last Push</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a class="reg-repo-name" href="repo-status-dash.html">nimbusops/status-dash</a></td>
+              <td><span class="reg-visibility internal">internal</span></td>
+              <td class="reg-tag-count">12</td>
+              <td class="reg-size">84 MB</td>
+              <td class="reg-size">482</td>
+              <td class="reg-updated">Feb 9, 2026</td>
+            </tr>
+            <tr>
+              <td><a class="reg-repo-name" href="#">nimbusops/auth-proxy</a></td>
+              <td><span class="reg-visibility private">private</span></td>
+              <td class="reg-tag-count">8</td>
+              <td class="reg-size">156 MB</td>
+              <td class="reg-size">231</td>
+              <td class="reg-updated">Feb 6, 2026</td>
+            </tr>
+            <tr>
+              <td><a class="reg-repo-name" href="#">nimbusops/deploy-tools</a></td>
+              <td><span class="reg-visibility internal">internal</span></td>
+              <td class="reg-tag-count">5</td>
+              <td class="reg-size">312 MB</td>
+              <td class="reg-size">147</td>
+              <td class="reg-updated">Feb 4, 2026</td>
+            </tr>
+            <tr>
+              <td><a class="reg-repo-name" href="#">nimbusops/monitoring-agent</a></td>
+              <td><span class="reg-visibility internal">internal</span></td>
+              <td class="reg-tag-count">6</td>
+              <td class="reg-size">203 MB</td>
+              <td class="reg-size">189</td>
+              <td class="reg-updated">Jan 30, 2026</td>
+            </tr>
+            <tr>
+              <td><a class="reg-repo-name" href="#">nimbusops/infra-charts</a></td>
+              <td><span class="reg-visibility internal">internal</span></td>
+              <td class="reg-tag-count">3</td>
+              <td class="reg-size">42 MB</td>
+              <td class="reg-size">76</td>
+              <td class="reg-updated">Jan 28, 2026</td>
+            </tr>
+            <tr>
+              <td><a class="reg-repo-name" href="#">nimbusops/k8s-sidecar</a></td>
+              <td><span class="reg-visibility private">private</span></td>
+              <td class="reg-tag-count">4</td>
+              <td class="reg-size">67 MB</td>
+              <td class="reg-size">94</td>
+              <td class="reg-updated">Jan 21, 2026</td>
+            </tr>
+            <tr>
+              <td><a class="reg-repo-name" href="#">nimbusops/coffee-roaster-api</a></td>
+              <td><span class="reg-visibility private">private</span></td>
+              <td class="reg-tag-count">7</td>
+              <td class="reg-size">198 MB</td>
+              <td class="reg-size">53</td>
+              <td class="reg-updated">Jan 15, 2026</td>
+            </tr>
+            <tr>
+              <td><a class="reg-repo-name" href="#">nimbusops/batch-worker</a></td>
+              <td><span class="reg-visibility internal">internal</span></td>
+              <td class="reg-tag-count">2</td>
+              <td class="reg-size">145 MB</td>
+              <td class="reg-size">12</td>
+              <td class="reg-updated">Dec 18, 2025</td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
+
+    <!-- ── Footer ───────────────────────────────────────────────────── -->
+    <footer class="reg-footer">
+      NimbusOps Container Registry v2.11.0 &middot;
+      <a href="#">API v2</a>
+      <a href="#">Documentation</a>
+      <a href="#">Status</a>
+      &middot; Backed by Harbor 2.11
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NimbusOps System Status</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="logo">
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="14" cy="14" r="13" stroke="#4f8ff7" stroke-width="2" />
+            <circle cx="10" cy="12" r="3" fill="#4f8ff7" opacity="0.6" />
+            <circle cx="17" cy="11" r="4" fill="#4f8ff7" opacity="0.8" />
+            <circle cx="14" cy="16" r="3.5" fill="#4f8ff7" />
+          </svg>
+          <span class="logo-text">NimbusOps</span>
+        </div>
+        <span class="header-label">System Status</span>
+      </header>
+
+      <div class="status-banner status-ok">
+        <span class="status-icon">●</span>
+        All Systems Operational
+      </div>
+
+      <div class="updated">
+        Last updated: <span id="last-updated">loading...</span>
+      </div>
+
+      <div id="services" class="services">
+        <!-- populated by status.js -->
+      </div>
+
+      <div class="incident-history">
+        <h2>Recent Incidents</h2>
+        <div class="incident">
+          <div class="incident-date">Feb 7, 2026</div>
+          <div class="incident-detail">
+            <strong>Degraded deploys - DNS resolution failure</strong>
+            <p>
+              Between 03:20 and 04:05 UTC, deployments to the production cluster
+              failed due to an internal DNS resolver outage. Image pulls from
+              the container registry timed out. Root cause was a misconfigured
+              upstream resolver after a routine infrastructure change. Resolved
+              by pinning the resolver endpoint. No customer-facing impact, the
+              previous deployment remained active throughout.
+            </p>
+            <span class="incident-status resolved">Resolved</span>
+          </div>
+        </div>
+        <div class="incident">
+          <div class="incident-date">Dec 21, 2025</div>
+          <div class="incident-detail">
+            <strong>Object Store - elevated latency</strong>
+            <p>
+              Intermittent latency spikes on the object storage service between
+              11:00 and 11:40 UTC. Caused by a hot partition during a large
+              batch import. Mitigated by rebalancing. p99 latency returned to
+              normal.
+            </p>
+            <span class="incident-status resolved">Resolved</span>
+          </div>
+        </div>
+        <div class="incident">
+          <div class="incident-date">Nov 14, 2025</div>
+          <div class="incident-detail">
+            <strong
+              >Complete platform outage - load balancer configuration
+              error</strong
+            >
+            <p>
+              Between 14:32 and 15:47 UTC, all services became unreachable due
+              to a critical misconfiguration in the primary load balancer. An
+              automated configuration deployment inadvertently removed routing
+              rules for all backend services. This caused a complete site outage
+              affecting 100% of users. The issue was identified through
+              escalated alerts and resolved by reverting the configuration
+              change and manually re-applying the correct rules. Post-incident
+              review revealed a gap in pre-deployment validation checks.
+            </p>
+            <span class="incident-status resolved">Resolved</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- <footer class="footer">Build info: <a href="../logs.nimbusops.internal/">pipeline logs</a></footer> -->
+      <!-- Repo: ghes.nimbusops.internal/NimbusOps/status-dash -->
+      <!-- TODO: reimplement build info information -->
+    </div>
+
+    <script src="js/status.js"></script>
+  </body>
+</html>

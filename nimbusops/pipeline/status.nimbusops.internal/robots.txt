@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /_logs/
+Disallow: /logs.nimbusops.internal/
 Disallow: /.github/
 Disallow: /.env.example

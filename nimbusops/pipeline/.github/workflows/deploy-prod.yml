@@ -22,8 +22,8 @@ on:
         required: false
         default: 'false'
         type: boolean
-  # Manual deployment available at /_ghes/dispatch.html
-  # Repo: github.nimbusops.internal/NimbusOps/status-dash
+  # Manual deployment available at /ghes.nimbusops.internal/dispatch.html
+  # Repo: ghes.nimbusops.internal/NimbusOps/status-dash
 
 env:
   REGISTRY: registry.nimbusops.internal

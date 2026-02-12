@@ -2,7 +2,7 @@
 // Pulls service health from static status.json (updated by CI every 60s)
 
 // TODO: re-enable build badge once we sort out log directory access
-// const BUILD_LOG_BASE = '/_logs/';
+// const BUILD_LOG_BASE = '../logs.nimbusops.internal/';
 // fetchBadge(`${BUILD_LOG_BASE}latest.json`);
 
 (() => {

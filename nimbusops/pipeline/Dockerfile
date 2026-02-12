@@ -14,4 +14,4 @@ RUN rm -f /usr/share/nginx/html/.env* \
 EXPOSE 80
 
 HEALTHCHECK --interval=30s --timeout=3s \
-  CMD wget -qO- http://localhost/status.json || exit 1
+  CMD wget -qO- http://localhost/status.nimbusops.internal/status.json || exit 1

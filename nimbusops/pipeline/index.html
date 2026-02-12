@@ -3,101 +3,144 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NimbusOps System Status</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <title>NimbusOps Intranet</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --surface: #161b22;
+        --border: #30363d;
+        --text: #e6edf3;
+        --text-muted: #7d8590;
+        --link: #58a6ff;
+        --link-hover: #79c0ff;
+        --accent: #4f8ff7;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 80px 20px;
+      }
+      .portal-header {
+        text-align: center;
+        margin-bottom: 48px;
+      }
+      .portal-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+      .portal-logo svg { flex-shrink: 0; }
+      .portal-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .portal-subtitle {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-top: 4px;
+      }
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+        max-width: 720px;
+        width: 100%;
+      }
+      .service-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 20px;
+        text-decoration: none;
+        color: var(--text);
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+      .service-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent);
+      }
+      .service-card-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--link);
+        margin-bottom: 6px;
+      }
+      .service-card-host {
+        font-size: 12px;
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+      }
+      .service-card-desc {
+        font-size: 13px;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+      .portal-footer {
+        margin-top: 64px;
+        font-size: 12px;
+        color: var(--text-muted);
+        text-align: center;
+      }
+      .portal-footer a {
+        color: var(--link);
+        text-decoration: none;
+      }
+      .portal-footer a:hover { text-decoration: underline; }
+    </style>
   </head>
   <body>
-    <div class="container">
-      <header class="header">
-        <div class="logo">
-          <svg
-            width="28"
-            height="28"
-            viewBox="0 0 28 28"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="14" cy="14" r="13" stroke="#4f8ff7" stroke-width="2" />
-            <circle cx="10" cy="12" r="3" fill="#4f8ff7" opacity="0.6" />
-            <circle cx="17" cy="11" r="4" fill="#4f8ff7" opacity="0.8" />
-            <circle cx="14" cy="16" r="3.5" fill="#4f8ff7" />
-          </svg>
-          <span class="logo-text">NimbusOps</span>
-        </div>
-        <span class="header-label">System Status</span>
-      </header>
-
-      <div class="status-banner status-ok">
-        <span class="status-icon">●</span>
-        All Systems Operational
+    <div class="portal-header">
+      <div class="portal-logo">
+        <svg width="36" height="36" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#4f8ff7" stroke-width="2" />
+          <circle cx="10" cy="12" r="3" fill="#4f8ff7" opacity="0.6" />
+          <circle cx="17" cy="11" r="4" fill="#4f8ff7" opacity="0.8" />
+          <circle cx="14" cy="16" r="3.5" fill="#4f8ff7" />
+        </svg>
+        <span class="portal-title">NimbusOps Intranet</span>
       </div>
-
-      <div class="updated">
-        Last updated: <span id="last-updated">loading...</span>
-      </div>
-
-      <div id="services" class="services">
-        <!-- populated by status.js -->
-      </div>
-
-      <div class="incident-history">
-        <h2>Recent Incidents</h2>
-        <div class="incident">
-          <div class="incident-date">Feb 7, 2026</div>
-          <div class="incident-detail">
-            <strong>Degraded deploys - DNS resolution failure</strong>
-            <p>
-              Between 03:20 and 04:05 UTC, deployments to the production cluster
-              failed due to an internal DNS resolver outage. Image pulls from
-              the container registry timed out. Root cause was a misconfigured
-              upstream resolver after a routine infrastructure change. Resolved
-              by pinning the resolver endpoint. No customer-facing impact, the
-              previous deployment remained active throughout.
-            </p>
-            <span class="incident-status resolved">Resolved</span>
-          </div>
-        </div>
-        <div class="incident">
-          <div class="incident-date">Dec 21, 2025</div>
-          <div class="incident-detail">
-            <strong>Object Store - elevated latency</strong>
-            <p>
-              Intermittent latency spikes on the object storage service between
-              11:00 and 11:40 UTC. Caused by a hot partition during a large
-              batch import. Mitigated by rebalancing. p99 latency returned to
-              normal.
-            </p>
-            <span class="incident-status resolved">Resolved</span>
-          </div>
-        </div>
-        <div class="incident">
-          <div class="incident-date">Nov 14, 2025</div>
-          <div class="incident-detail">
-            <strong
-              >Complete platform outage - load balancer configuration
-              error</strong
-            >
-            <p>
-              Between 14:32 and 15:47 UTC, all services became unreachable due
-              to a critical misconfiguration in the primary load balancer. An
-              automated configuration deployment inadvertently removed routing
-              rules for all backend services. This caused a complete site outage
-              affecting 100% of users. The issue was identified through
-              escalated alerts and resolved by reverting the configuration
-              change and manually re-applying the correct rules. Post-incident
-              review revealed a gap in pre-deployment validation checks.
-            </p>
-            <span class="incident-status resolved">Resolved</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- <footer class="footer">Build info: <a href="/_logs/">pipeline logs</a></footer> -->
-      <!-- Repo: github.nimbusops.internal/NimbusOps/status-dash -->
-      <!-- TODO: reimplement build info information -->
+      <div class="portal-subtitle">Internal services &mdash; VPN required</div>
     </div>
 
-    <script src="js/status.js"></script>
+    <div class="service-grid">
+      <a class="service-card" href="status.nimbusops.internal/">
+        <div class="service-card-title">System Status</div>
+        <div class="service-card-host">status.nimbusops.internal</div>
+        <div class="service-card-desc">Service health dashboard &amp; incident history for all NimbusOps infrastructure.</div>
+      </a>
+
+      <a class="service-card" href="ghes.nimbusops.internal/">
+        <div class="service-card-title">GitHub Enterprise Server</div>
+        <div class="service-card-host">ghes.nimbusops.internal</div>
+        <div class="service-card-desc">Source code, CI/CD pipelines, issues, and internal documentation.</div>
+      </a>
+
+      <a class="service-card" href="logs.nimbusops.internal/">
+        <div class="service-card-title">Pipeline Logs</div>
+        <div class="service-card-host">logs.nimbusops.internal</div>
+        <div class="service-card-desc">Build &amp; deploy logs for CI/CD pipeline runs.</div>
+      </a>
+
+      <a class="service-card" href="registry.nimbusops.internal/">
+        <div class="service-card-title">Container Registry</div>
+        <div class="service-card-host">registry.nimbusops.internal</div>
+        <div class="service-card-desc">Private container image registry. Docker &amp; OCI images for all NimbusOps services.</div>
+      </a>
+    </div>
+
+    <div class="portal-footer">
+      &copy; 2026 NimbusOps &mdash; <a href="https://it-help.nimbusops.internal">IT Help Desk</a> &middot; <a href="https://wiki.nimbusops.internal">Company Wiki</a>
+    </div>
   </body>
 </html>

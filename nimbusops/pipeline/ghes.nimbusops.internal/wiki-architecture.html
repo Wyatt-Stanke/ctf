@@ -129,7 +129,7 @@
           <h2>Components</h2>
 
           <h3>Source Code &amp; CI/CD</h3>
-          <p>Source lives on our self-hosted <strong>GitHub Enterprise Server 3.13</strong> instance at <code>github.nimbusops.internal</code>. The deploy workflow (<code>deploy-prod.yml</code>) runs on GitHub-hosted runners (we evaluated self-hosted runners but decided against it for this repo — see <a href="issues.html">issue #24</a>).</p>
+          <p>Source lives on our self-hosted <strong>GitHub Enterprise Server 3.13</strong> instance at <code>ghes.nimbusops.internal</code>. The deploy workflow (<code>deploy-prod.yml</code>) runs on GitHub-hosted runners (we evaluated self-hosted runners but decided against it for this repo — see <a href="issues.html">issue #24</a>).</p>
 
           <h3>Container Registry</h3>
           <p>We run a private Docker registry at <code>registry.nimbusops.internal</code>, backed by S3 object storage in US East. Authentication uses a static deploy key, base64-encoded and passed as a Basic auth header. (We're planning to migrate to OIDC — see <a href="issues.html">issue #65</a>.)</p>

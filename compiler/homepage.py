@@ -69,13 +69,13 @@ def _build_card_html(cdir: Path) -> tuple[str, str | None]:
 
     card = (
         f'          <div class="challenge-card" data-slug="{slug}">\n'
-        f"            <div class=\"card-header\">\n"
+        f'            <div class="card-header">\n'
         f'              <span class="difficulty" style="color:{diff_color};background:{diff_color}22">{_escape(difficulty)}</span>\n'
         f'              <a class="card-title" href="./{slug}/challenge/">{title}</a>\n'
         f"            </div>\n"
         f'            <p class="card-summary">{summary}</p>\n'
         f'            <div class="card-footer">\n'
-        f'              <a class="card-link" href="./{slug}/" target="_blank">Open challenge &rarr;</a>\n'
+        f'              <a class="card-link" href="./{slug}/challenge/" target="_blank">Open challenge &rarr;</a>\n'
         f'              <form class="flag-form" data-slug="{slug}" onsubmit="return _checkFlag(event)">\n'
         f'                <input type="text" class="flag-input" placeholder="flag{{...}}" autocomplete="off" spellcheck="false" />\n'
         f'                <button type="submit" class="flag-btn">Submit</button>\n'
@@ -151,7 +151,9 @@ def generate_homepage(groups: list[ChallengeGroup], dest: Path) -> None:
 
     dest.mkdir(parents=True, exist_ok=True)
     (dest / "index.html").write_text(html, encoding="utf-8")
-    print(f"  homepage  index.html  ({total_challenges} challenge(s) in {len(groups)} group(s))")
+    print(
+        f"  homepage  index.html  ({total_challenges} challenge(s) in {len(groups)} group(s))"
+    )
 
 
 def _escape(text: str) -> str:

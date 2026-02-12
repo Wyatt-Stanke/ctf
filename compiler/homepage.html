@@ -114,16 +114,107 @@
         white-space: nowrap;
       }
 
-      /* Challenge cards */
+      /* ── Groups ── */
+      .group {
+        margin-bottom: 32px;
+      }
+
+      .group-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        user-select: none;
+        transition: border-color 0.2s, background 0.15s;
+      }
+
+      .group-header:hover {
+        border-color: var(--accent);
+        background: var(--surface-2);
+      }
+
+      .group-header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .group-chevron {
+        font-size: 14px;
+        color: var(--text-dim);
+        transition: transform 0.25s ease;
+        display: inline-block;
+      }
+
+      .group.collapsed .group-chevron {
+        transform: rotate(-90deg);
+      }
+
+      .group-title {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 18px;
+        font-weight: 700;
+        color: #f0f2f6;
+        margin: 0;
+      }
+
+      .group-count {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text-dim);
+        background: var(--surface-2);
+        padding: 2px 8px;
+        border-radius: 10px;
+      }
+
+      .group-progress {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--text-dim);
+      }
+
+      .group-progress.all-solved {
+        color: var(--green);
+      }
+
+      .group-description {
+        font-size: 14px;
+        color: var(--text-dim);
+        padding: 12px 20px 0;
+        line-height: 1.6;
+      }
+
+      .group-body {
+        padding-top: 16px;
+        overflow: hidden;
+        transition: max-height 0.35s ease, opacity 0.25s ease, padding-top 0.35s ease;
+        max-height: 5000px;
+        opacity: 1;
+      }
+
+      .group.collapsed .group-body {
+        max-height: 0;
+        opacity: 0;
+        padding-top: 0;
+      }
+
+      .group.collapsed .group-description {
+        display: none;
+      }
+
+      /* ── Challenge cards ── */
       .challenge-card {
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 8px;
         padding: 28px 32px;
         margin-bottom: 20px;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
+        transition: border-color 0.2s, box-shadow 0.2s;
       }
 
       .challenge-card:hover {
@@ -261,7 +352,7 @@
         border-radius: 3px;
       }
 
-      /* Reset button */
+      /* ── Reset button ── */
       .reset-section {
         margin-top: 40px;
         display: flex;
@@ -279,9 +370,7 @@
         border-radius: 4px;
         padding: 8px 20px;
         cursor: pointer;
-        transition:
-          color 0.2s,
-          border-color 0.2s;
+        transition: color 0.2s, border-color 0.2s;
       }
 
       .reset-btn:hover {
@@ -289,7 +378,7 @@
         border-color: var(--red);
       }
 
-      /* Confirm dialog overlay */
+      /* ── Confirm dialog overlay ── */
       .confirm-overlay {
         display: none;
         position: fixed;
@@ -360,7 +449,7 @@
         background: var(--red);
       }
 
-      /* Confetti & celebration animation */
+      /* ── Confetti & celebration animation ── */
       .confetti-canvas {
         position: fixed;
         inset: 0;
@@ -369,69 +458,31 @@
       }
 
       @keyframes shake {
-        0%,
-        100% {
-          transform: translateX(0);
-        }
-        20%,
-        60% {
-          transform: translateX(-4px);
-        }
-        40%,
-        80% {
-          transform: translateX(4px);
-        }
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-4px); }
+        40%, 80% { transform: translateX(4px); }
       }
-      .shake {
-        animation: shake 0.3s ease;
-      }
+      .shake { animation: shake 0.3s ease; }
 
       @keyframes celebrate-glow {
-        0% {
-          box-shadow: 0 0 0px transparent;
-        }
-        30% {
-          box-shadow:
-            0 0 30px #22c55e55,
-            0 0 60px #22c55e22;
-        }
-        100% {
-          box-shadow: 0 0 20px #22c55e22;
-        }
+        0% { box-shadow: 0 0 0px transparent; }
+        30% { box-shadow: 0 0 30px #22c55e55, 0 0 60px #22c55e22; }
+        100% { box-shadow: 0 0 20px #22c55e22; }
       }
 
       @keyframes flag-pop {
-        0% {
-          transform: scale(0.8);
-          opacity: 0;
-        }
-        50% {
-          transform: scale(1.15);
-        }
-        100% {
-          transform: scale(1);
-          opacity: 1;
-        }
+        0% { transform: scale(0.8); opacity: 0; }
+        50% { transform: scale(1.15); }
+        100% { transform: scale(1); opacity: 1; }
       }
 
-      .celebrate {
-        animation: celebrate-glow 0.8s ease forwards;
-      }
-      .flag-pop {
-        animation: flag-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-      }
+      .celebrate { animation: celebrate-glow 0.8s ease forwards; }
+      .flag-pop { animation: flag-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
 
       @media (max-width: 600px) {
-        .card-footer {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .flag-input {
-          width: 100%;
-        }
-        .flag-form {
-          width: 100%;
-        }
+        .card-footer { flex-direction: column; align-items: flex-start; }
+        .flag-input { width: 100%; }
+        .flag-form { width: 100%; }
       }
     </style>
   </head>
@@ -448,20 +499,14 @@
         </p>
 
         <div class="progress-bar">
-          <span class="progress-label" id="progressText"
-            >0 / {{COUNT}} solved</span
-          >
+          <span class="progress-label" id="progressText">0 / {{COUNT}} solved</span>
           <div class="progress-track">
-            <div
-              class="progress-fill"
-              id="progressFill"
-              style="width: 0%"
-            ></div>
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
           </div>
         </div>
       </div>
 
-      {{CARDS}}
+{{GROUPS}}
 
       <div class="reset-section">
         <button class="reset-btn" onclick="_showReset()">Reset Progress</button>
@@ -478,216 +523,258 @@
         </p>
         <div class="confirm-actions">
           <button class="btn-cancel" onclick="_hideReset()">Cancel</button>
-          <button class="btn-danger" onclick="_confirmReset()">
-            Yes, reset
-          </button>
+          <button class="btn-danger" onclick="_confirmReset()">Yes, reset</button>
         </div>
       </div>
     </div>
 
     <script>
-            const FLAG_HASHES = {
-      {{HASHES}}
-            };
+      const FLAG_HASHES = {
+{{HASHES}}
+      };
 
-            const TOTAL = Object.keys(FLAG_HASHES).length;
+      const GROUP_MAP = {
+{{GROUP_MAP}}
+      };
 
-            /* ── localStorage helpers ── */
-            function _getSolved() {
-              try { return JSON.parse(localStorage.getItem("ctf_solved") || "{}"); }
-              catch { return {}; }
+      const TOTAL = Object.keys(FLAG_HASHES).length;
+
+      /* ── localStorage helpers ── */
+      function _getSolved() {
+        try { return JSON.parse(localStorage.getItem("ctf_solved") || "{}"); }
+        catch { return {}; }
+      }
+
+      function _setSolved(slug) {
+        const s = _getSolved();
+        s[slug] = true;
+        localStorage.setItem("ctf_solved", JSON.stringify(s));
+      }
+
+      /* ── Group collapse ── */
+      function _toggleGroup(header) {
+        const group = header.closest(".group");
+        group.classList.toggle("collapsed");
+        // Persist collapse state
+        _saveCollapseState();
+      }
+
+      function _saveCollapseState() {
+        const state = {};
+        document.querySelectorAll(".group").forEach(g => {
+          state[g.dataset.group] = g.classList.contains("collapsed");
+        });
+        localStorage.setItem("ctf_collapsed", JSON.stringify(state));
+      }
+
+      function _restoreCollapseState() {
+        try {
+          const state = JSON.parse(localStorage.getItem("ctf_collapsed") || "{}");
+          for (const [slug, collapsed] of Object.entries(state)) {
+            if (collapsed) {
+              const g = document.querySelector(`.group[data-group="${slug}"]`);
+              if (g) g.classList.add("collapsed");
             }
+          }
+        } catch {}
+      }
 
-            function _setSolved(slug) {
-              const s = _getSolved();
-              s[slug] = true;
-              localStorage.setItem("ctf_solved", JSON.stringify(s));
+      /* ── Progress ── */
+      function _updateProgress() {
+        const solved = _getSolved();
+        const count = Object.keys(FLAG_HASHES).filter(k => solved[k]).length;
+        document.getElementById("progressText").textContent = count + " / " + TOTAL + " solved";
+        document.getElementById("progressFill").style.width = (TOTAL ? (count / TOTAL) * 100 : 0) + "%";
+
+        // Update card solved states
+        for (const slug of Object.keys(FLAG_HASHES)) {
+          const card = document.querySelector(`.challenge-card[data-slug="${slug}"]`);
+          if (!card) continue;
+          const resultEl = card.querySelector(".flag-result");
+          if (solved[slug]) {
+            card.classList.add("solved");
+            if (resultEl && !resultEl.textContent) {
+              resultEl.className = "flag-result correct";
+              resultEl.innerHTML = '<span class="solved-badge flag-pop">&#10003; Solved</span>';
             }
+          }
+        }
 
-            /* ── Progress ── */
-            function _updateProgress() {
-              const solved = _getSolved();
-              const count = Object.keys(FLAG_HASHES).filter(k => solved[k]).length;
-              document.getElementById("progressText").textContent = count + " / " + TOTAL + " solved";
-              document.getElementById("progressFill").style.width = (TOTAL ? (count / TOTAL) * 100 : 0) + "%";
+        // Update per-group progress
+        for (const [groupSlug, challenges] of Object.entries(GROUP_MAP)) {
+          const el = document.querySelector(`[data-group-progress="${groupSlug}"]`);
+          if (!el) continue;
+          const groupSolved = challenges.filter(c => solved[c]).length;
+          el.textContent = groupSolved + " / " + challenges.length;
+          if (groupSolved === challenges.length && challenges.length > 0) {
+            el.classList.add("all-solved");
+            el.textContent += " ✓";
+          } else {
+            el.classList.remove("all-solved");
+          }
+        }
+      }
 
-              for (const slug of Object.keys(FLAG_HASHES)) {
-                const card = document.querySelector(`.challenge-card[data-slug="${slug}"]`);
-                if (!card) continue;
-                const resultEl = card.querySelector(".flag-result");
-                if (solved[slug]) {
-                  card.classList.add("solved");
-                  if (resultEl && !resultEl.textContent) {
-                    resultEl.className = "flag-result correct";
-                    resultEl.innerHTML = '<span class="solved-badge flag-pop">&#10003; Solved</span>';
-                  }
-                }
-              }
+      /* ── SHA-256 ── */
+      async function _sha256(str) {
+        const buf = new TextEncoder().encode(str);
+        const hash = await crypto.subtle.digest("SHA-256", buf);
+        return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+      }
+
+      /* ── Confetti engine ── */
+      const _confetti = (() => {
+        const canvas = document.getElementById("confettiCanvas");
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+        let running = false;
+
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        const COLORS = ["#22c55e", "#e05a33", "#fbbf24", "#a855f7", "#3b82f6", "#ec4899", "#f0f2f6"];
+
+        function spawn(x, y, count) {
+          for (let i = 0; i < count; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 4 + Math.random() * 8;
+            particles.push({
+              x, y,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed - 4,
+              size: 4 + Math.random() * 6,
+              color: COLORS[Math.floor(Math.random() * COLORS.length)],
+              rotation: Math.random() * 360,
+              rotSpeed: (Math.random() - 0.5) * 12,
+              life: 1,
+              decay: 0.008 + Math.random() * 0.012,
+              shape: Math.random() > 0.5 ? "rect" : "circle",
+            });
+          }
+          if (!running) { running = true; loop(); }
+        }
+
+        function loop() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.18;
+            p.vx *= 0.99;
+            p.rotation += p.rotSpeed;
+            p.life -= p.decay;
+            if (p.life <= 0) { particles.splice(i, 1); continue; }
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.globalAlpha = p.life;
+            ctx.fillStyle = p.color;
+            if (p.shape === "rect") {
+              ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+            } else {
+              ctx.beginPath();
+              ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+              ctx.fill();
             }
+            ctx.restore();
+          }
+          if (particles.length > 0) {
+            requestAnimationFrame(loop);
+          } else {
+            running = false;
+          }
+        }
 
-            /* ── SHA-256 ── */
-            async function _sha256(str) {
-              const buf = new TextEncoder().encode(str);
-              const hash = await crypto.subtle.digest("SHA-256", buf);
-              return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-            }
+        return { burst(el) {
+          const rect = el.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          spawn(cx, cy, 60);
+          setTimeout(() => spawn(cx - 60, cy - 20, 30), 100);
+          setTimeout(() => spawn(cx + 60, cy - 20, 30), 200);
+        }};
+      })();
 
-            /* ── Confetti engine ── */
-            const _confetti = (() => {
-              const canvas = document.getElementById("confettiCanvas");
-              const ctx = canvas.getContext("2d");
-              let particles = [];
-              let running = false;
+      /* ── Flag checking ── */
+      async function _checkFlag(e) {
+        e.preventDefault();
+        const form = e.target;
+        const slug = form.dataset.slug;
+        const input = form.querySelector(".flag-input");
+        const resultEl = document.querySelector(`[data-result="${slug}"]`);
+        const value = input.value.trim();
 
-              function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-              }
-              window.addEventListener("resize", resize);
-              resize();
+        if (!value) return false;
 
-              const COLORS = ["#22c55e", "#e05a33", "#fbbf24", "#a855f7", "#3b82f6", "#ec4899", "#f0f2f6"];
+        const expected = FLAG_HASHES[slug];
+        if (!expected) {
+          resultEl.className = "flag-result incorrect";
+          resultEl.textContent = "No hash configured for this challenge.";
+          return false;
+        }
 
-              function spawn(x, y, count) {
-                for (let i = 0; i < count; i++) {
-                  const angle = Math.random() * Math.PI * 2;
-                  const speed = 4 + Math.random() * 8;
-                  particles.push({
-                    x, y,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed - 4,
-                    size: 4 + Math.random() * 6,
-                    color: COLORS[Math.floor(Math.random() * COLORS.length)],
-                    rotation: Math.random() * 360,
-                    rotSpeed: (Math.random() - 0.5) * 12,
-                    life: 1,
-                    decay: 0.008 + Math.random() * 0.012,
-                    shape: Math.random() > 0.5 ? "rect" : "circle",
-                  });
-                }
-                if (!running) { running = true; loop(); }
-              }
+        const hash = await _sha256(value);
 
-              function loop() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = particles.length - 1; i >= 0; i--) {
-                  const p = particles[i];
-                  p.x += p.vx;
-                  p.y += p.vy;
-                  p.vy += 0.18;           // gravity
-                  p.vx *= 0.99;           // drag
-                  p.rotation += p.rotSpeed;
-                  p.life -= p.decay;
-                  if (p.life <= 0) { particles.splice(i, 1); continue; }
+        if (hash === expected) {
+          const card = document.querySelector(`.challenge-card[data-slug="${slug}"]`);
 
-                  ctx.save();
-                  ctx.translate(p.x, p.y);
-                  ctx.rotate((p.rotation * Math.PI) / 180);
-                  ctx.globalAlpha = p.life;
-                  ctx.fillStyle = p.color;
-                  if (p.shape === "rect") {
-                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
-                  } else {
-                    ctx.beginPath();
-                    ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-                    ctx.fill();
-                  }
-                  ctx.restore();
-                }
-                if (particles.length > 0) {
-                  requestAnimationFrame(loop);
-                } else {
-                  running = false;
-                }
-              }
+          resultEl.className = "flag-result correct";
+          resultEl.innerHTML = '<span class="solved-badge flag-pop">&#10003; Correct!</span>';
 
-              return { burst(el) {
-                const rect = el.getBoundingClientRect();
-                const cx = rect.left + rect.width / 2;
-                const cy = rect.top + rect.height / 2;
-                // Three bursts for extra celebration
-                spawn(cx, cy, 60);
-                setTimeout(() => spawn(cx - 60, cy - 20, 30), 100);
-                setTimeout(() => spawn(cx + 60, cy - 20, 30), 200);
-              }};
-            })();
+          if (card) {
+            card.classList.add("solved", "celebrate");
+            _confetti.burst(card);
+            setTimeout(() => card.classList.remove("celebrate"), 800);
+          }
 
-            /* ── Flag checking ── */
-            async function _checkFlag(e) {
-              e.preventDefault();
-              const form = e.target;
-              const slug = form.dataset.slug;
-              const input = form.querySelector(".flag-input");
-              const resultEl = document.querySelector(`[data-result="${slug}"]`);
-              const value = input.value.trim();
+          _setSolved(slug);
+          _updateProgress();
+        } else {
+          resultEl.className = "flag-result incorrect";
+          resultEl.textContent = "Incorrect flag. Try again.";
+          input.classList.add("shake");
+          setTimeout(() => input.classList.remove("shake"), 400);
+        }
 
-              if (!value) return false;
+        return false;
+      }
 
-              const expected = FLAG_HASHES[slug];
-              if (!expected) {
-                resultEl.className = "flag-result incorrect";
-                resultEl.textContent = "No hash configured for this challenge.";
-                return false;
-              }
+      /* ── Reset dialog ── */
+      function _showReset() {
+        document.getElementById("resetOverlay").classList.add("visible");
+      }
 
-              const hash = await _sha256(value);
+      function _hideReset(e) {
+        if (!e || e.target === document.getElementById("resetOverlay")) {
+          document.getElementById("resetOverlay").classList.remove("visible");
+        }
+      }
 
-              if (hash === expected) {
-                const card = document.querySelector(`.challenge-card[data-slug="${slug}"]`);
+      function _confirmReset() {
+        localStorage.removeItem("ctf_solved");
+        document.getElementById("resetOverlay").classList.remove("visible");
 
-                // Celebration animation
-                resultEl.className = "flag-result correct";
-                resultEl.innerHTML = '<span class="solved-badge flag-pop">&#10003; Correct!</span>';
+        document.querySelectorAll(".challenge-card").forEach(card => {
+          card.classList.remove("solved", "celebrate");
+          const resultEl = card.querySelector(".flag-result");
+          if (resultEl) {
+            resultEl.className = "flag-result";
+            resultEl.textContent = "";
+          }
+        });
 
-                if (card) {
-                  card.classList.add("solved", "celebrate");
-                  _confetti.burst(card);
-                  setTimeout(() => card.classList.remove("celebrate"), 800);
-                }
+        _updateProgress();
+      }
 
-                _setSolved(slug);
-                _updateProgress();
-              } else {
-                resultEl.className = "flag-result incorrect";
-                resultEl.textContent = "Incorrect flag. Try again.";
-                input.classList.add("shake");
-                setTimeout(() => input.classList.remove("shake"), 400);
-              }
-
-              return false;
-            }
-
-            /* ── Reset dialog ── */
-            function _showReset() {
-              document.getElementById("resetOverlay").classList.add("visible");
-            }
-
-            function _hideReset(e) {
-              // Close if clicking overlay backdrop or cancel button
-              if (!e || e.target === document.getElementById("resetOverlay")) {
-                document.getElementById("resetOverlay").classList.remove("visible");
-              }
-            }
-
-            function _confirmReset() {
-              localStorage.removeItem("ctf_solved");
-              document.getElementById("resetOverlay").classList.remove("visible");
-
-              // Reset all card states
-              document.querySelectorAll(".challenge-card").forEach(card => {
-                card.classList.remove("solved", "celebrate");
-                const resultEl = card.querySelector(".flag-result");
-                if (resultEl) {
-                  resultEl.className = "flag-result";
-                  resultEl.textContent = "";
-                }
-              });
-
-              _updateProgress();
-            }
-
-            // Init on load
-            _updateProgress();
+      // Init on load
+      _restoreCollapseState();
+      _updateProgress();
     </script>
   </body>
 </html>

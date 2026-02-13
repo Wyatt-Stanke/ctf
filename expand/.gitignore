@@ -1,0 +1,7 @@
+# Build artefacts
+expand.com
+*.com.dbg
+*.elf
+
+# cosmocc toolchain (downloaded at build time)
+.cosmocc/

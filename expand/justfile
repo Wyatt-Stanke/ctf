@@ -1,0 +1,64 @@
+# expand — Actually Portable Executable zip extractor
+#
+# Produces expand.com, an APE binary with an embedded zip payload.
+# The APE binary is itself a valid zip file; files added via `zip` are
+# accessible at runtime through Cosmopolitan's /zip/ virtual filesystem.
+#
+# Requirements: curl/wget, unzip, zip
+
+# ── Configuration ──────────────────────────────────────────────────────────
+
+cosmocc_version := "4.0.2"
+cosmocc_dir     := ".cosmocc"
+cosmocc         := cosmocc_dir / "bin/cosmocc"
+cosmocc_url     := "https://cosmo.zip/pub/cosmocc/cosmocc-" + cosmocc_version + ".zip"
+
+src         := "expand.c"
+out         := "expand.com"
+payload_dir := "payload"
+cflags      := "-Os -Wall -Wextra -Wpedantic"
+
+# ── Recipes ────────────────────────────────────────────────────────────────
+
+# Default: build the binary with embedded payload.
+default: build
+
+# Download the cosmocc toolchain if not already present.
+toolchain:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [[ -x "{{cosmocc}}" ]]; then
+        echo "==> cosmocc found at {{cosmocc}}"
+        exit 0
+    fi
+    echo "==> Downloading cosmocc {{cosmocc_version}} …"
+    mkdir -p "{{cosmocc_dir}}"
+    curl -fsSL -o "{{cosmocc_dir}}/cosmocc.zip" "{{cosmocc_url}}" || \
+        wget -qO "{{cosmocc_dir}}/cosmocc.zip" "{{cosmocc_url}}"
+    unzip -qo "{{cosmocc_dir}}/cosmocc.zip" -d "{{cosmocc_dir}}"
+    rm -f "{{cosmocc_dir}}/cosmocc.zip"
+    chmod +x "{{cosmocc}}"
+    echo "==> cosmocc ready at {{cosmocc}}"
+
+# Compile the APE binary and embed the payload.
+build: toolchain
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [[ ! -d "{{payload_dir}}" ]]; then
+        echo "error: payload directory '{{payload_dir}}' does not exist"
+        echo "  Create it and add the files you want to embed."
+        exit 1
+    fi
+    echo "==> Compiling {{src}} …"
+    {{cosmocc}} {{cflags}} -o {{out}} {{src}}
+    echo "==> Embedding payload from {{payload_dir}}/ …"
+    (cd "{{payload_dir}}" && zip -qr "../{{out}}" .)
+    size=$(stat -c%s "{{out}}" 2>/dev/null || stat -f%z "{{out}}")
+    echo "==> Built {{out}} (${size} bytes)"
+
+# Remove build artefacts and the toolchain.
+clean:
+    rm -f {{out}}
+    rm -rf {{cosmocc_dir}}
+    rm -f *.com.dbg
+    rm -f *.elf
